@@ -237,31 +237,13 @@ ul { list-style: none; }
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
   flex-shrink: 0;
 }
-.nav-logo-icon {
-  width: 40px;
-  height: 40px;
-}
-.nav-logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-.nav-logo-name {
-  font-family: var(--ff-title);
-  font-size: 1.5rem;
-  font-weight: 400;
-  letter-spacing: 0.15em;
-  color: var(--cream);
-}
-.nav-logo-tagline {
-  font-size: 0.55rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-top: 2px;
+.nav-logo-img {
+  height: 52px;
+  width: auto;
+  mix-blend-mode: screen;
+  display: block;
 }
 
 /* Links */
@@ -431,16 +413,17 @@ ul { list-style: none; }
   z-index: 0;
 }
 
-/* Hummingbird SVG decorative */
+/* Logo decorativo en hero */
 .hero-bird {
   position: absolute;
-  right: 8%;
+  right: 4%;
   top: 50%;
   transform: translateY(-50%);
-  width: clamp(220px, 28vw, 400px);
-  opacity: 0.12;
+  width: clamp(300px, 36vw, 520px);
+  opacity: 0.18;
   z-index: 0;
   pointer-events: none;
+  mix-blend-mode: screen;
 }
 
 .hero-content {
@@ -1366,22 +1349,7 @@ ul { list-style: none; }
 <nav class="nav" id="mainNav">
   <div class="container nav-inner">
     <a href="#inicio" class="nav-logo">
-      <!-- Logo SVG simplificado tipo wordmark -->
-      <svg class="nav-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="19" stroke="#c9a032" stroke-width="0.8"/>
-        <!-- Hummingbird silhouette simplified -->
-        <g fill="#c9a032">
-          <ellipse cx="20" cy="17" rx="3.5" ry="2" opacity="0.9"/>
-          <path d="M20 15 C22 11 27 10 26 13 C24 15 21 15 20 15Z" opacity="0.85"/>
-          <path d="M20 15 C18 13 15 12 16 15 C17 16 19 15.5 20 15Z" opacity="0.7"/>
-          <circle cx="23" cy="15.5" r="0.8"/>
-          <path d="M20 17 L20 24 Q19 26 18 27 Q20 25 20.5 24 L21 17Z" opacity="0.6"/>
-        </g>
-      </svg>
-      <div class="nav-logo-text">
-        <span class="nav-logo-name">ECOLAW</span>
-        <span class="nav-logo-tagline">Real Estate &amp; Law</span>
-      </div>
+      <img src="Ecolaw-logo.jpeg" alt="Ecolaw Real Estate & Law" class="nav-logo-img">
     </a>
 
     <ul class="nav-links">
@@ -1417,33 +1385,8 @@ ul { list-style: none; }
   </div>
   <div class="hero-deco-text">ECO</div>
 
-  <!-- Hummingbird decorativo -->
-  <svg class="hero-bird" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="200" cy="200" r="198" stroke="#c9a032" stroke-width="0.5"/>
-    <circle cx="200" cy="200" r="180" stroke="#c9a032" stroke-width="0.3"/>
-    <!-- Colibrí estilizado -->
-    <g fill="#c9a032">
-      <!-- Cuerpo -->
-      <ellipse cx="200" cy="185" rx="38" ry="22" opacity="0.9"/>
-      <!-- Ala derecha -->
-      <path d="M200 175 C230 150 290 145 275 168 C260 185 215 180 200 175Z" opacity="0.8"/>
-      <!-- Ala izquierda -->
-      <path d="M200 175 C172 158 140 155 152 172 C162 185 192 180 200 175Z" opacity="0.65"/>
-      <!-- Pico -->
-      <path d="M238 178 L290 168 L285 174 L238 182Z" opacity="0.9"/>
-      <!-- Ojo -->
-      <circle cx="232" cy="177" r="5.5"/>
-      <circle cx="233.5" cy="175.5" r="1.5" fill="#1a1a1a"/>
-      <!-- Cola -->
-      <path d="M162 190 L130 215 Q145 205 155 210 Q165 215 162 190Z" opacity="0.7"/>
-      <path d="M162 190 L125 225 Q140 212 148 218 Q155 222 162 190Z" opacity="0.5"/>
-      <!-- Pecho / degradado -->
-      <ellipse cx="195" cy="195" rx="24" ry="14" opacity="0.3"/>
-    </g>
-    <!-- líneas decorativas -->
-    <line x1="80" y1="200" x2="120" y2="200" stroke="#c9a032" stroke-width="0.5" opacity="0.4"/>
-    <line x1="280" y1="200" x2="320" y2="200" stroke="#c9a032" stroke-width="0.5" opacity="0.4"/>
-  </svg>
+  <!-- Logo decorativo en hero -->
+  <img src="Ecolaw-logo.jpeg" alt="" class="hero-bird">
 
   <div class="container">
     <div class="hero-content">
@@ -1929,8 +1872,7 @@ ul { list-style: none; }
   <div class="container">
     <div class="footer-main">
       <div class="footer-brand">
-        <div class="footer-logo-name">ECOLAW</div>
-        <span class="footer-logo-tagline">Real Estate &amp; Law</span>
+        <img src="Ecolaw-logo.jpeg" alt="Ecolaw Real Estate & Law" style="height:56px;width:auto;mix-blend-mode:screen;margin-bottom:0.6rem;">
         <p>Despacho jurídico especializado en derecho agrario, inmobiliario y civil. Protegemos su patrimonio con experiencia, ética y resultados.</p>
       </div>
 
