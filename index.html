@@ -194,33 +194,13 @@ ul { list-style: none; }
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  flex-shrink: 0;
-  text-decoration: none;
-}
-.nav-logo-icon {
-  width: 36px;
-  height: 36px;
   flex-shrink: 0;
 }
-.nav-logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-.nav-logo-name {
-  font-family: var(--ff-title);
-  font-size: 1.45rem;
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  color: var(--cream);
-}
-.nav-logo-tagline {
-  font-size: 0.52rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-top: 3px;
+.nav-logo-img {
+  height: 52px;
+  width: auto;
+  display: block;
+  mix-blend-mode: screen;
 }
 
 /* Links */
@@ -1310,22 +1290,7 @@ ul { list-style: none; }
 <nav class="nav" id="mainNav">
   <div class="container nav-inner">
     <a href="#inicio" class="nav-logo">
-      <svg class="nav-logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="18" cy="18" r="17" stroke="#c9a032" stroke-width="0.8"/>
-        <circle cx="18" cy="18" r="13.5" stroke="#c9a032" stroke-width="0.4" stroke-dasharray="2 3"/>
-        <!-- Hummingbird -->
-        <ellipse cx="18" cy="16.5" rx="4" ry="2.4" fill="#c9a032"/>
-        <path d="M18 14.5C20.5 11 25.5 10.5 24 13.5C22.5 15.5 19.5 15.5 18 14.5Z" fill="#c9a032" opacity="0.85"/>
-        <path d="M18 14.5C16 12 12.5 11.5 13.5 14C14.5 15.5 17 15 18 14.5Z" fill="#c9a032" opacity="0.65"/>
-        <path d="M22 15.5L29 13.5L28.5 16L22 17Z" fill="#c9a032"/>
-        <circle cx="21.5" cy="15" r="1.1" fill="#c9a032"/>
-        <circle cx="22" cy="14.6" r="0.45" fill="#111"/>
-        <path d="M14 18L11 22Q13 20 14 21Q15 22 14 18Z" fill="#c9a032" opacity="0.65"/>
-      </svg>
-      <div class="nav-logo-text">
-        <span class="nav-logo-name">ECOLAW</span>
-        <span class="nav-logo-tagline">Real Estate &amp; Law</span>
-      </div>
+      <img src="Ecolaw-logo.jpeg" alt="Ecolaw Real Estate &amp; Law" class="nav-logo-img">
     </a>
 
     <ul class="nav-links">
@@ -1361,24 +1326,7 @@ ul { list-style: none; }
   </div>
   <div class="hero-deco-text">ECO</div>
 
-  <!-- Colibrí decorativo hero -->
-  <svg class="hero-bird" viewBox="0 0 400 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="200" cy="135" rx="60" ry="34" fill="#c9a032" opacity="0.9"/>
-    <path d="M200 105C245 65 330 60 310 100C295 128 220 130 200 105Z" fill="#c9a032" opacity="0.8"/>
-    <path d="M200 105C160 75 100 72 118 102C133 124 190 126 200 105Z" fill="#c9a032" opacity="0.6"/>
-    <path d="M260 112L385 78L380 98L260 128Z" fill="#c9a032" opacity="0.95"/>
-    <circle cx="248" cy="107" r="11" fill="#c9a032"/>
-    <circle cx="252" cy="103" r="4" fill="#111111"/>
-    <circle cx="253.5" cy="102" r="1.5" fill="#c9a032" opacity="0.6"/>
-    <path d="M140 148L90 200Q115 185 125 195Q138 205 140 148Z" fill="#c9a032" opacity="0.7"/>
-    <path d="M140 148L80 210Q108 192 118 204Q132 215 140 148Z" fill="#c9a032" opacity="0.45"/>
-    <ellipse cx="193" cy="148" rx="35" ry="18" fill="#c9a032" opacity="0.25"/>
-    <!-- decorative rings -->
-    <circle cx="200" cy="140" r="155" stroke="#c9a032" stroke-width="0.6" opacity="0.12"/>
-    <circle cx="200" cy="140" r="185" stroke="#c9a032" stroke-width="0.4" opacity="0.07"/>
-    <line x1="20" y1="140" x2="80" y2="140" stroke="#c9a032" stroke-width="0.6" opacity="0.3"/>
-    <line x1="320" y1="140" x2="380" y2="140" stroke="#c9a032" stroke-width="0.6" opacity="0.3"/>
-  </svg>
+  <img src="Ecolaw-logo.jpeg" alt="" class="hero-bird">
 
   <div class="container">
     <div class="hero-content">
@@ -1864,23 +1812,7 @@ ul { list-style: none; }
   <div class="container">
     <div class="footer-main">
       <div class="footer-brand">
-        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.4rem;">
-          <svg width="38" height="38" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="18" cy="18" r="17" stroke="#c9a032" stroke-width="0.8"/>
-            <circle cx="18" cy="18" r="13.5" stroke="#c9a032" stroke-width="0.4" stroke-dasharray="2 3"/>
-            <ellipse cx="18" cy="16.5" rx="4" ry="2.4" fill="#c9a032"/>
-            <path d="M18 14.5C20.5 11 25.5 10.5 24 13.5C22.5 15.5 19.5 15.5 18 14.5Z" fill="#c9a032" opacity="0.85"/>
-            <path d="M18 14.5C16 12 12.5 11.5 13.5 14C14.5 15.5 17 15 18 14.5Z" fill="#c9a032" opacity="0.65"/>
-            <path d="M22 15.5L29 13.5L28.5 16L22 17Z" fill="#c9a032"/>
-            <circle cx="21.5" cy="15" r="1.1" fill="#c9a032"/>
-            <circle cx="22" cy="14.6" r="0.45" fill="#111"/>
-            <path d="M14 18L11 22Q13 20 14 21Q15 22 14 18Z" fill="#c9a032" opacity="0.65"/>
-          </svg>
-          <div>
-            <div class="footer-logo-name">ECOLAW</div>
-            <span class="footer-logo-tagline">Real Estate &amp; Law</span>
-          </div>
-        </div>
+        <img src="Ecolaw-logo.jpeg" alt="Ecolaw Real Estate &amp; Law" style="height:60px;width:auto;mix-blend-mode:screen;display:block;margin-bottom:0.8rem;">
         <p>Despacho jurídico especializado en derecho agrario, inmobiliario y civil. Protegemos su patrimonio con experiencia, ética y resultados.</p>
       </div>
 
