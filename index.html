@@ -3,1807 +3,749 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ECOLAW — Real Estate & Law</title>
+<title>ECOLAW — Real Estate &amp; Law</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-
 <style>
-/* ═══════════════════════════════════════════
-   VARIABLES & RESET
-═══════════════════════════════════════════ */
 :root {
-  --bg:        #1a1a1a;
-  --bg-deep:   #111111;
-  --bg-card:   #222222;
-  --bg-card2:  #1e1e1e;
-  --cream:     #f0ead6;
-  --muted:     #9a9080;
-  --gold:      #c9a032;
-  --gold-lt:   #e0b84a;
-  --gold-dk:   #a07820;
-  --border:    rgba(201,160,50,0.22);
-  --border-md: rgba(201,160,50,0.45);
-  --shadow:    0 4px 40px rgba(201,160,50,0.07);
-  --shadow-lg: 0 8px 60px rgba(201,160,50,0.12);
-  --ff-title:  'Cormorant Garamond', serif;
-  --ff-body:   'Lato', sans-serif;
-  --trans:     0.35s cubic-bezier(.25,.46,.45,.94);
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; font-size: 16px; }
-
-body {
-  background: var(--bg);
-  color: var(--cream);
-  font-family: var(--ff-body);
-  font-weight: 300;
-  line-height: 1.7;
-  overflow-x: hidden;
-}
-
-img { display: block; max-width: 100%; }
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; border: none; background: none; }
-ul { list-style: none; }
-
-/* ═══════════════════════════════════════════
-   UTILITIES
-═══════════════════════════════════════════ */
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.gold { color: var(--gold); }
-.muted { color: var(--muted); }
-
-.section-label {
-  font-family: var(--ff-body);
-  font-size: 0.68rem;
-  font-weight: 400;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: block;
-  margin-bottom: 1.2rem;
-}
-
-.section-title {
-  font-family: var(--ff-title);
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 400;
-  line-height: 1.15;
-  color: var(--cream);
-}
-
-.section-title em {
-  font-style: italic;
-  color: var(--gold);
-}
-
-.gold-line {
-  display: block;
-  width: 48px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--gold), transparent);
-  margin: 1.8rem 0;
-}
-
-.gold-line.center {
-  margin: 1.8rem auto;
-}
-
-/* Buttons */
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.85rem 2rem;
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  font-family: var(--ff-body);
-  font-size: 0.78rem;
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  transition: var(--trans);
-  position: relative;
-  overflow: hidden;
-}
-.btn-outline::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--trans);
-  z-index: 0;
-}
-.btn-outline:hover::before { transform: scaleX(1); }
-.btn-outline:hover { color: var(--bg-deep); }
-.btn-outline span { position: relative; z-index: 1; }
-
-.btn-solid {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.85rem 2rem;
-  background: var(--gold);
-  color: var(--bg-deep);
-  font-family: var(--ff-body);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  transition: var(--trans);
-}
-.btn-solid:hover {
-  background: var(--gold-lt);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(201,160,50,0.3);
-}
-
-/* Reveal animations */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-.reveal-delay-5 { transition-delay: 0.5s; }
-
-/* topbar removed */
-
-/* ═══════════════════════════════════════════
-   2. NAV
-═══════════════════════════════════════════ */
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(26,26,26,0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  transition: background var(--trans), box-shadow var(--trans);
-}
-.nav.scrolled {
-  background: rgba(17,17,17,0.97);
-  box-shadow: 0 4px 40px rgba(0,0,0,0.5);
-}
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 72px;
-}
-
-/* Logo */
-.nav-logo {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-.nav-logo-img {
-  height: 52px;
-  width: auto;
-  display: block;
-}
-
-/* Links */
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-}
-.nav-links a {
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  transition: color var(--trans);
-  position: relative;
-}
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transition: transform var(--trans);
-}
-.nav-links a:hover { color: var(--cream); }
-.nav-links a:hover::after { transform: scaleX(1); }
-
-.nav-cta {
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 0.6rem 1.4rem;
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  transition: var(--trans);
-  flex-shrink: 0;
-}
-.nav-cta:hover { background: var(--gold); color: var(--bg-deep); }
-
-/* Hamburger */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  padding: 4px;
-}
-.hamburger span {
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: var(--cream);
-  transition: var(--trans);
-}
-.hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
-/* Mobile menu */
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: var(--bg-deep);
-  z-index: 99;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--trans);
-}
-.mobile-menu.open {
-  display: flex;
-  opacity: 1;
-  pointer-events: all;
-}
-.mobile-menu a {
-  font-family: var(--ff-title);
-  font-size: 2rem;
-  font-weight: 300;
-  color: var(--cream);
-  letter-spacing: 0.08em;
-  transition: color var(--trans);
-}
-.mobile-menu a:hover { color: var(--gold); }
-.mobile-menu .mobile-close {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  font-size: 1.5rem;
-  color: var(--muted);
-}
-
-/* ═══════════════════════════════════════════
-   3. HERO
-═══════════════════════════════════════════ */
-.hero {
-  position: relative;
-  min-height: 92vh;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  background: var(--bg-deep);
-}
-
-/* Atmospheric background */
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-.hero-bg::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 60%;
-  height: 120%;
-  background: radial-gradient(ellipse at center, rgba(201,160,50,0.06) 0%, transparent 65%);
-  pointer-events: none;
-}
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 200px;
-  background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
-  pointer-events: none;
-}
-
-/* Decorative grid lines */
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-}
-.hero-grid::before {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0;
-  left: 55%;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, rgba(201,160,50,0.15), transparent);
-}
-
-/* Large decorative text */
-.hero-deco-text {
-  position: absolute;
-  right: -2%;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--ff-title);
-  font-size: clamp(8rem, 14vw, 16rem);
-  font-weight: 300;
-  color: rgba(201,160,50,0.04);
-  letter-spacing: 0.05em;
-  line-height: 1;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-}
-
-/* Logo decorativo en hero */
-.hero-bird {
-  position: absolute;
-  right: 4%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(300px, 36vw, 520px);
-  opacity: 0.18;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 680px;
-  padding: 5rem 0;
-}
-
-.hero-eyebrow {
-  font-size: 0.68rem;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-.hero-eyebrow::before {
-  content: '';
-  display: block;
-  width: 32px;
-  height: 1px;
-  background: var(--gold);
-}
-
-.hero-headline {
-  font-family: var(--ff-title);
-  font-size: clamp(2.8rem, 6vw, 5.2rem);
-  font-weight: 300;
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  color: var(--cream);
-  margin-bottom: 1.8rem;
-}
-.hero-headline em {
-  font-style: italic;
-  color: var(--gold);
-}
-
-.hero-sub {
-  font-size: 1.05rem;
-  color: var(--muted);
-  max-width: 480px;
-  margin-bottom: 3rem;
-  line-height: 1.8;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 1.2rem;
-  flex-wrap: wrap;
-  margin-bottom: 4.5rem;
-}
-
-/* Stats bar */
-.hero-stats {
-  display: flex;
-  gap: 3rem;
-  flex-wrap: wrap;
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--border);
-}
-.hero-stat {}
-.hero-stat-num {
-  font-family: var(--ff-title);
-  font-size: 2.4rem;
-  font-weight: 300;
-  color: var(--gold);
-  line-height: 1;
-  display: block;
-}
-.hero-stat-label {
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 0.3rem;
-  display: block;
-}
-
-/* ═══════════════════════════════════════════
-   4. TRUST SIGNALS
-═══════════════════════════════════════════ */
-.trust {
-  background: var(--bg-card);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 1.6rem 0;
-}
-.trust-grid {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-.trust-item {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  flex: 1;
-  min-width: 160px;
-}
-.trust-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  color: var(--gold);
-}
-.trust-icon svg { width: 20px; height: 20px; stroke: var(--gold); }
-.problem-card-icon svg { width: 26px; height: 26px; stroke: var(--gold); display: block; }
-.service-icon svg { width: 34px; height: 34px; stroke: var(--gold); display: block; }
-.contact-data-icon svg { width: 19px; height: 19px; stroke: var(--gold); }
-.trust-text strong {
-  display: block;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--cream);
-  line-height: 1.2;
-}
-.trust-text span {
-  font-size: 0.68rem;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-}
-.trust-divider {
-  width: 1px;
-  height: 40px;
-  background: var(--border);
-  flex-shrink: 0;
-}
-
-/* ═══════════════════════════════════════════
-   5. PROBLEMA / SOLUCIÓN
-═══════════════════════════════════════════ */
-.problem {
-  padding: 7rem 0;
-  background: var(--bg);
-}
-.problem-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-  align-items: start;
-}
-.problem-text {}
-.problem-text p {
-  color: var(--muted);
-  margin-bottom: 1.5rem;
-  font-size: 0.98rem;
-}
-.problem-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.2rem;
-}
-.problem-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  padding: 1.6rem;
-  transition: var(--trans);
-  position: relative;
-  overflow: hidden;
-}
-.problem-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 3px;
-  height: 0;
-  background: var(--gold);
-  transition: height 0.4s ease;
-}
-.problem-card:hover { border-color: var(--border-md); box-shadow: var(--shadow); }
-.problem-card:hover::before { height: 100%; }
-.problem-card-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
-.problem-card h4 {
-  font-family: var(--ff-title);
-  font-size: 1.05rem;
-  font-weight: 400;
-  color: var(--cream);
-  margin-bottom: 0.5rem;
-}
-.problem-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin: 0; }
-
-/* ═══════════════════════════════════════════
-   6. SERVICIOS
-═══════════════════════════════════════════ */
-.services {
-  padding: 7rem 0;
-  background: var(--bg-deep);
-}
-.services-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5px;
-  background: var(--border);
-  border: 1px solid var(--border);
-}
-.service-card {
-  background: var(--bg-card);
-  padding: 2.8rem 2.2rem;
-  transition: var(--trans);
-  position: relative;
-  overflow: hidden;
-}
-.service-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0;
-  transition: opacity var(--trans);
-}
-.service-card:hover {
-  background: var(--bg-card2);
-  transform: translateY(-2px);
-  z-index: 1;
-  box-shadow: var(--shadow-lg);
-}
-.service-card:hover::after { opacity: 1; }
-
-.service-num {
-  font-family: var(--ff-title);
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  color: var(--gold);
-  margin-bottom: 1.5rem;
-  display: block;
-}
-.service-icon { font-size: 2rem; margin-bottom: 1.2rem; line-height: 1; }
-.service-title {
-  font-family: var(--ff-title);
-  font-size: 1.3rem;
-  font-weight: 400;
-  color: var(--cream);
-  margin-bottom: 0.8rem;
-  line-height: 1.2;
-}
-.service-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
-
-.service-arrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-top: 1.5rem;
-  opacity: 0;
-  transform: translateX(-8px);
-  transition: var(--trans);
-}
-.service-card:hover .service-arrow {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* ═══════════════════════════════════════════
-   7. PROCESO
-═══════════════════════════════════════════ */
-.process {
-  padding: 7rem 0;
-  background: var(--bg);
-}
-.process-header {
-  text-align: center;
-  margin-bottom: 5rem;
-}
-.process-steps {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  position: relative;
-  gap: 2rem;
-}
-/* Connecting line */
-.process-steps::before {
-  content: '';
-  position: absolute;
-  top: 36px;
-  left: calc(12.5% + 20px);
-  right: calc(12.5% + 20px);
-  height: 1px;
-  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dk) 50%, var(--gold) 100%);
-  opacity: 0.3;
-  z-index: 0;
-}
-.process-step {
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-.step-num {
-  width: 72px;
-  height: 72px;
-  border: 1px solid var(--border-md);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.8rem;
-  font-family: var(--ff-title);
-  font-size: 1.6rem;
-  font-weight: 300;
-  color: var(--gold);
-  background: var(--bg-deep);
-  transition: var(--trans);
-}
-.process-step:hover .step-num {
-  background: var(--gold);
-  color: var(--bg-deep);
-  box-shadow: 0 0 30px rgba(201,160,50,0.25);
-}
-.step-title {
-  font-family: var(--ff-title);
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: var(--cream);
-  margin-bottom: 0.6rem;
-}
-.step-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
-
-/* ═══════════════════════════════════════════
-   8. SOCIOS FUNDADORES
-═══════════════════════════════════════════ */
-.partners {
-  padding: 7rem 0;
-  background: var(--bg-deep);
-  position: relative;
-  overflow: hidden;
-}
-.partners::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.3;
-}
-.partners-header {
-  text-align: center;
-  margin-bottom: 4.5rem;
-}
-.partners-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  max-width: 820px;
-  margin: 0 auto;
-}
-.partner-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  padding: 3rem 2.5rem;
-  text-align: center;
-  transition: var(--trans);
-  position: relative;
-}
-.partner-card:hover {
-  border-color: var(--border-md);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
-}
-.partner-avatar {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  border: 1px solid var(--border-md);
-  background: var(--bg-deep);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.8rem;
-  font-family: var(--ff-title);
-  font-size: 2rem;
-  font-weight: 300;
-  color: var(--gold);
-  position: relative;
-}
-.partner-avatar::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-}
-.partner-name {
-  font-family: var(--ff-title);
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: var(--cream);
-  margin-bottom: 0.3rem;
-}
-.partner-years {
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.8rem;
-}
-.partner-school {
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-bottom: 1.2rem;
-}
-.partner-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
-
-/* ═══════════════════════════════════════════
-   9. TESTIMONIOS
-═══════════════════════════════════════════ */
-.testimonials {
-  padding: 7rem 0;
-  background: var(--bg);
-}
-.testimonials-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-.testimonial-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  padding: 2.5rem;
-  position: relative;
-  transition: var(--trans);
-}
-.testimonial-card:hover {
-  border-color: var(--border-md);
-  box-shadow: var(--shadow);
-}
-.testimonial-quote {
-  font-family: var(--ff-title);
-  font-size: 4rem;
-  line-height: 0.8;
-  color: var(--gold);
-  opacity: 0.35;
-  margin-bottom: 1.2rem;
-}
-.testimonial-text {
-  font-family: var(--ff-title);
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--cream);
-  line-height: 1.7;
-  margin-bottom: 1.8rem;
-}
-.testimonial-stars {
-  color: var(--gold);
-  font-size: 0.9rem;
-  margin-bottom: 1.2rem;
-  letter-spacing: 0.1em;
-}
-.testimonial-author strong {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--cream);
-  letter-spacing: 0.06em;
-}
-.testimonial-author span {
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-
-/* ═══════════════════════════════════════════
-   10. CTA CENTRAL
-═══════════════════════════════════════════ */
-.cta-section {
-  padding: 7rem 0;
-  background: var(--gold);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.cta-section::before {
-  content: 'ECOLAW';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-family: var(--ff-title);
-  font-size: 20vw;
-  font-weight: 300;
-  color: rgba(0,0,0,0.06);
-  white-space: nowrap;
-  pointer-events: none;
-  letter-spacing: 0.1em;
-}
-.cta-section .section-label { color: var(--bg-deep); opacity: 0.6; }
-.cta-section .section-title { color: var(--bg-deep); }
-.cta-section p {
-  color: rgba(26,26,26,0.65);
-  font-size: 1rem;
-  max-width: 480px;
-  margin: 1.5rem auto 2.5rem;
-}
-.cta-section .btn-solid {
-  background: var(--bg-deep);
-  color: var(--gold);
-}
-.cta-section .btn-solid:hover {
-  background: var(--bg);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-}
-.cta-section .btn-outline {
-  border-color: var(--bg-deep);
-  color: var(--bg-deep);
-}
-.cta-section .btn-outline::before { background: var(--bg-deep); }
-.cta-section .btn-outline:hover { color: var(--gold); }
-.cta-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* ═══════════════════════════════════════════
-   11. FAQ
-═══════════════════════════════════════════ */
-.faq {
-  padding: 7rem 0;
-  background: var(--bg-deep);
-}
-.faq-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-.faq-list {
-  max-width: 780px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.faq-item {
-  border-bottom: 1px solid var(--border);
-}
-.faq-item:first-child { border-top: 1px solid var(--border); }
-.faq-q {
-  width: 100%;
-  text-align: left;
-  padding: 1.6rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  font-family: var(--ff-title);
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: var(--cream);
-  transition: color var(--trans);
-}
-.faq-q:hover { color: var(--gold); }
-.faq-icon {
-  width: 24px;
-  height: 24px;
-  border: 1px solid var(--border-md);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  color: var(--gold);
-  font-size: 0.9rem;
-  transition: var(--trans);
-}
-.faq-item.open .faq-icon { transform: rotate(45deg); background: var(--gold); color: var(--bg-deep); border-color: var(--gold); }
-.faq-a {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, padding 0.4s ease;
-}
-.faq-a-inner {
-  padding-bottom: 1.6rem;
-  color: var(--muted);
-  font-size: 0.92rem;
-  line-height: 1.8;
-}
-
-/* ═══════════════════════════════════════════
-   12. CONTACTO
-═══════════════════════════════════════════ */
-.contact {
-  padding: 7rem 0;
-  background: var(--bg);
-}
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-  align-items: start;
-}
-.contact-info {}
-.contact-info p {
-  color: var(--muted);
-  margin-bottom: 2.5rem;
-  font-size: 0.95rem;
-}
-.contact-data {
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-}
-.contact-data-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-.contact-data-icon {
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  color: var(--gold);
-  flex-shrink: 0;
-}
-.contact-data-item strong {
-  display: block;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.25rem;
-}
-.contact-data-item span { font-size: 0.9rem; color: var(--cream); }
-
-/* Form */
-.contact-form {}
-.contact-form h3 {
-  font-family: var(--ff-title);
-  font-size: 1.8rem;
-  font-weight: 400;
-  color: var(--cream);
-  margin-bottom: 0.5rem;
-}
-.contact-form p { font-size: 0.83rem; color: var(--muted); margin-bottom: 2rem; }
-
-.form-group { margin-bottom: 1.2rem; }
-.form-group label {
-  display: block;
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 0.5rem;
-}
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--cream);
-  padding: 0.9rem 1.1rem;
-  font-family: var(--ff-body);
-  font-size: 0.9rem;
-  transition: border-color var(--trans);
-  outline: none;
-  appearance: none;
-}
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  border-color: var(--gold);
-}
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: rgba(154,144,128,0.5);
-}
-.form-group textarea { resize: vertical; min-height: 110px; }
-.form-group select option { background: var(--bg-card); }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-.form-submit {
-  width: 100%;
-  padding: 1rem;
-  background: #25D366;
-  color: #fff;
-  font-family: var(--ff-body);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  transition: var(--trans);
-  margin-top: 0.5rem;
-}
-.form-submit:hover { background: #1ebe5d; transform: translateY(-2px); }
-.form-submit svg { width: 18px; height: 18px; fill: #fff; flex-shrink: 0; }
-
-/* ═══════════════════════════════════════════
-   13. FOOTER
-═══════════════════════════════════════════ */
-.footer {
-  background: var(--bg-deep);
-  border-top: 1px solid var(--border);
-  padding: 4rem 0 2rem;
-}
-.footer-main {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 4rem;
-  margin-bottom: 3rem;
-}
-.footer-brand {}
-.footer-logo-name {
-  font-family: var(--ff-title);
-  font-size: 2rem;
-  font-weight: 300;
-  letter-spacing: 0.18em;
-  color: var(--cream);
-}
-.footer-logo-tagline {
-  font-size: 0.6rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 1.2rem;
-  display: block;
-}
-.footer-brand p { font-size: 0.85rem; color: var(--muted); line-height: 1.8; max-width: 300px; }
-
-.footer-col h4 {
-  font-size: 0.68rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 1.4rem;
-}
-.footer-col ul { display: flex; flex-direction: column; gap: 0.7rem; }
-.footer-col ul a {
-  font-size: 0.85rem;
-  color: var(--muted);
-  transition: color var(--trans);
-}
-.footer-col ul a:hover { color: var(--cream); }
-
-.footer-bottom {
-  border-top: 1px solid var(--border);
-  padding-top: 1.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.footer-bottom p, .footer-bottom small {
-  font-size: 0.72rem;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.footer-disclaimer {
-  font-size: 0.7rem;
-  color: rgba(154,144,128,0.5);
-  text-align: right;
-  max-width: 450px;
-}
-
-/* ═══════════════════════════════════════════
-   FLOATING WHATSAPP
-═══════════════════════════════════════════ */
-.wa-float {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 200;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.8rem;
-}
-.wa-tooltip {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--cream);
-  font-size: 0.8rem;
-  padding: 0.6rem 1rem;
-  white-space: nowrap;
-  box-shadow: var(--shadow);
-  animation: tooltipFade 4s forwards;
-  pointer-events: none;
-}
-@keyframes tooltipFade {
-  0% { opacity: 0; transform: translateY(4px); }
-  15% { opacity: 1; transform: translateY(0); }
-  75% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-4px); }
-}
-.wa-btn {
-  width: 58px;
-  height: 58px;
-  background: #25D366;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.35);
-  transition: var(--trans);
-}
-.wa-btn:hover {
-  background: #1ebe5d;
-  transform: scale(1.08);
-  box-shadow: 0 6px 30px rgba(37,211,102,0.5);
-}
-.wa-btn svg { width: 28px; height: 28px; fill: #fff; }
-
-/* Pulse ring */
-.wa-btn::before {
-  content: '';
-  position: absolute;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  border: 2px solid rgba(37,211,102,0.4);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 0.8; }
-  100% { transform: scale(1.6); opacity: 0; }
-}
-
-/* ═══════════════════════════════════════════
-   SEPARATOR SVG BIRD
-═══════════════════════════════════════════ */
-.bird-separator {
-  text-align: center;
-  padding: 0.5rem 0;
-  opacity: 0.4;
-}
-.bird-separator svg {
-  width: 48px;
-  height: 48px;
-  display: inline-block;
-}
-
-/* ═══════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════ */
-@media (max-width: 768px) {
-  .nav-links, .nav-cta { display: none; }
-  .hamburger { display: flex; }
-
-
-  .hero-content { padding: 4rem 0; }
-  .hero-stats { gap: 2rem; }
-
-  .trust-divider { display: none; }
-  .trust-grid { gap: 1rem; }
-  .trust-item { min-width: 140px; }
-
-  .problem-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .problem-cards { grid-template-columns: 1fr 1fr; }
-
-  .services-grid { grid-template-columns: 1fr 1fr; }
-
-  .process-steps {
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-  }
-  .process-steps::before { display: none; }
-
-  .partners-grid { grid-template-columns: 1fr; max-width: 380px; }
-
-  .testimonials-grid { grid-template-columns: 1fr; }
-
-  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
-
-  .footer-main { grid-template-columns: 1fr; gap: 2.5rem; }
-  .footer-bottom { flex-direction: column; }
-  .footer-disclaimer { text-align: left; }
-
-  .form-row { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 480px) {
-  .services-grid { grid-template-columns: 1fr; }
-  .problem-cards { grid-template-columns: 1fr; }
-  .hero-headline { font-size: 2.4rem; }
-  .hero-actions { flex-direction: column; }
-  .hero-actions .btn-outline,
-  .hero-actions .btn-solid { justify-content: center; }
-  .process-steps { grid-template-columns: 1fr; }
-  .trust-grid { flex-direction: column; }
-  .cta-actions { flex-direction: column; align-items: center; }
+  --bg:#1a1a1a; --bg-deep:#111111; --bg-card:#222222; --bg-card2:#1e1e1e;
+  --cream:#f0ead6; --muted:#9a9080; --gold:#c9a032; --gold-lt:#e0b84a; --gold-dk:#a07820;
+  --border:rgba(201,160,50,0.22); --border-md:rgba(201,160,50,0.45);
+  --shadow:0 4px 40px rgba(201,160,50,0.07); --shadow-lg:0 8px 60px rgba(201,160,50,0.12);
+  --ff-title:'Cormorant Garamond',serif; --ff-body:'Lato',sans-serif;
+  --trans:0.35s cubic-bezier(.25,.46,.45,.94);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--cream);font-family:var(--ff-body);font-weight:300;line-height:1.7;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;border:none;background:none}
+ul{list-style:none}
+
+.container{width:90%;max-width:1200px;margin:0 auto}
+.gold{color:var(--gold)} .muted{color:var(--muted)}
+.section-label{font-family:var(--ff-body);font-size:.68rem;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1.2rem}
+.section-title{font-family:var(--ff-title);font-size:clamp(2rem,4vw,3.2rem);font-weight:400;line-height:1.15;color:var(--cream)}
+.section-title em{font-style:italic;color:var(--gold)}
+.gold-line{display:block;width:48px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:1.8rem 0}
+.gold-line.center{margin:1.8rem auto}
+
+.btn-outline{display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 2rem;border:1px solid var(--gold);color:var(--gold);font-family:var(--ff-body);font-size:.78rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;transition:var(--trans);position:relative;overflow:hidden}
+.btn-outline::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform var(--trans);z-index:0}
+.btn-outline:hover::before{transform:scaleX(1)}
+.btn-outline:hover{color:var(--bg-deep)}
+.btn-outline span{position:relative;z-index:1}
+.btn-solid{display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 2rem;background:var(--gold);color:var(--bg-deep);font-family:var(--ff-body);font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;transition:var(--trans)}
+.btn-solid:hover{background:var(--gold-lt);transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,160,50,.3)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s} .reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s} .reveal-delay-4{transition-delay:.4s}
+
+/* ── NAV ── */
+.nav{position:sticky;top:0;z-index:100;background:rgba(26,26,26,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:background var(--trans),box-shadow var(--trans)}
+.nav.scrolled{background:rgba(17,17,17,.97);box-shadow:0 4px 40px rgba(0,0,0,.5)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo{display:flex;align-items:center;flex-shrink:0}
+.nav-logo-img{height:52px;width:auto;display:block}
+.nav-links{display:flex;align-items:center;gap:2.5rem}
+.nav-links a{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:color var(--trans);position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform var(--trans)}
+.nav-links a:hover{color:var(--cream)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-right{display:flex;align-items:center;gap:1rem;flex-shrink:0}
+.nav-cta{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;padding:.6rem 1.4rem;border:1px solid var(--gold);color:var(--gold);transition:var(--trans);white-space:nowrap}
+.nav-cta:hover{background:var(--gold);color:var(--bg-deep)}
+.lang-toggle{display:flex;align-items:center;border:1px solid var(--border-md);overflow:hidden;flex-shrink:0}
+.lang-btn{padding:.35rem .65rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--muted);transition:var(--trans);cursor:pointer;font-family:var(--ff-body)}
+.lang-btn.active{background:var(--gold);color:var(--bg-deep)}
+.lang-btn:hover:not(.active){color:var(--cream)}
+
+.hamburger{display:none;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:1px;background:var(--cream);transition:var(--trans)}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg-deep);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;opacity:0;pointer-events:none;transition:opacity var(--trans)}
+.mobile-menu.open{display:flex;opacity:1;pointer-events:all}
+.mobile-menu a{font-family:var(--ff-title);font-size:2rem;font-weight:300;color:var(--cream);letter-spacing:.08em;transition:color var(--trans)}
+.mobile-menu a:hover{color:var(--gold)}
+.mobile-menu .mobile-close{position:absolute;top:1.5rem;right:1.5rem;font-size:1.5rem;color:var(--muted)}
+.mobile-lang{display:flex;gap:.5rem;margin-top:1rem}
+.mobile-lang button{font-size:.75rem;letter-spacing:.14em;font-weight:700;color:var(--muted);padding:.4rem .9rem;border:1px solid var(--border-md);font-family:var(--ff-body);transition:var(--trans)}
+.mobile-lang button.active{background:var(--gold);color:var(--bg-deep);border-color:var(--gold)}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;background:var(--bg-deep)}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg::before{content:'';position:absolute;top:-20%;right:-10%;width:60%;height:120%;background:radial-gradient(ellipse at center,rgba(201,160,50,.06) 0%,transparent 65%);pointer-events:none}
+.hero-bg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,var(--bg) 0%,transparent 100%);pointer-events:none}
+.hero-grid{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-grid::before{content:'';position:absolute;top:0;bottom:0;left:55%;width:1px;background:linear-gradient(to bottom,transparent,rgba(201,160,50,.15),transparent)}
+.hero-deco-text{position:absolute;right:-2%;top:50%;transform:translateY(-50%);font-family:var(--ff-title);font-size:clamp(8rem,14vw,16rem);font-weight:300;color:rgba(201,160,50,.04);letter-spacing:.05em;line-height:1;pointer-events:none;user-select:none;z-index:0}
+.hero-bird{position:absolute;right:4%;top:50%;transform:translateY(-50%);width:clamp(300px,36vw,520px);opacity:.18;z-index:0;pointer-events:none}
+.hero-content{position:relative;z-index:1;max-width:680px;padding:5rem 0}
+.hero-eyebrow{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--gold)}
+.hero-headline{font-family:var(--ff-title);font-size:clamp(2.8rem,6vw,5.2rem);font-weight:300;line-height:1.08;letter-spacing:-.01em;color:var(--cream);margin-bottom:1.8rem}
+.hero-headline em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:480px;margin-bottom:3rem;line-height:1.8}
+.hero-actions{display:flex;gap:1.2rem;flex-wrap:wrap;margin-bottom:4.5rem}
+.hero-stats{display:flex;gap:3rem;flex-wrap:wrap;padding-top:2.5rem;border-top:1px solid var(--border)}
+.hero-stat-num{font-family:var(--ff-title);font-size:2.4rem;font-weight:300;color:var(--gold);line-height:1;display:block}
+.hero-stat-label{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:.3rem;display:block}
+
+/* ── TRUST ── */
+.trust{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.6rem 0}
+.trust-grid{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:.8rem;flex:1;min-width:160px}
+.trust-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold)}
+.trust-icon svg{width:20px;height:20px;stroke:var(--gold)}
+.trust-text strong{display:block;font-size:.78rem;font-weight:700;letter-spacing:.06em;color:var(--cream);line-height:1.2}
+.trust-text span{font-size:.68rem;color:var(--muted);letter-spacing:.04em}
+.trust-divider{width:1px;height:40px;background:var(--border);flex-shrink:0}
+
+/* ── PROBLEM ── */
+.problem{padding:7rem 0;background:var(--bg)}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.problem-text p{color:var(--muted);margin-bottom:1.5rem;font-size:.98rem}
+.problem-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.problem-card{background:var(--bg-card);border:1px solid var(--border);padding:1.6rem;transition:var(--trans);position:relative;overflow:hidden}
+.problem-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--gold);transition:height .4s ease}
+.problem-card:hover{border-color:var(--border-md);box-shadow:var(--shadow)}
+.problem-card:hover::before{height:100%}
+.problem-card-icon{margin-bottom:.8rem}
+.problem-card-icon svg{width:26px;height:26px;stroke:var(--gold);display:block}
+.problem-card h4{font-family:var(--ff-title);font-size:1.05rem;font-weight:400;color:var(--cream);margin-bottom:.5rem}
+.problem-card p{font-size:.82rem;color:var(--muted);line-height:1.6;margin:0}
+
+/* ── SERVICES ── */
+.services{padding:7rem 0;background:var(--bg-deep)}
+.services-header{text-align:center;margin-bottom:4rem}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--border);border:1px solid var(--border)}
+.service-card{background:var(--bg-card);padding:2.8rem 2.2rem;transition:var(--trans);position:relative;overflow:hidden}
+.service-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity var(--trans)}
+.service-card:hover{background:var(--bg-card2);transform:translateY(-2px);z-index:1;box-shadow:var(--shadow-lg)}
+.service-card:hover::after{opacity:1}
+.service-num{font-family:var(--ff-title);font-size:.7rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1.5rem;display:block}
+.service-icon{margin-bottom:1.2rem}
+.service-icon svg{width:34px;height:34px;stroke:var(--gold);display:block}
+.service-title{font-family:var(--ff-title);font-size:1.3rem;font-weight:400;color:var(--cream);margin-bottom:.8rem;line-height:1.2}
+.service-desc{font-size:.85rem;color:var(--muted);line-height:1.7}
+.service-arrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:1.5rem;opacity:0;transform:translateX(-8px);transition:var(--trans)}
+.service-card:hover .service-arrow{opacity:1;transform:translateX(0)}
+
+/* ── PROCESS ── */
+.process{padding:7rem 0;background:var(--bg)}
+.process-header{text-align:center;margin-bottom:5rem}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);position:relative;gap:2rem}
+.process-steps::before{content:'';position:absolute;top:36px;left:calc(12.5% + 20px);right:calc(12.5% + 20px);height:1px;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-dk) 50%,var(--gold) 100%);opacity:.3;z-index:0}
+.process-step{text-align:center;position:relative;z-index:1}
+.step-num{width:72px;height:72px;border:1px solid var(--border-md);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.8rem;font-family:var(--ff-title);font-size:1.6rem;font-weight:300;color:var(--gold);background:var(--bg-deep);transition:var(--trans)}
+.process-step:hover .step-num{background:var(--gold);color:var(--bg-deep);box-shadow:0 0 30px rgba(201,160,50,.25)}
+.step-title{font-family:var(--ff-title);font-size:1.2rem;font-weight:400;color:var(--cream);margin-bottom:.6rem}
+.step-desc{font-size:.83rem;color:var(--muted);line-height:1.6}
+
+/* ── BIRD SEPARATOR ── */
+.bird-separator{text-align:center;padding:.5rem 0;opacity:.4}
+.bird-separator svg{width:48px;height:48px;display:inline-block}
+
+/* ── PARTNERS ── */
+.partners{padding:7rem 0;background:var(--bg-deep);position:relative;overflow:hidden}
+.partners::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.3}
+.partners-header{text-align:center;margin-bottom:4.5rem}
+.partners-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:820px;margin:0 auto}
+.partner-card{background:var(--bg-card);border:1px solid var(--border);padding:3rem 2.5rem;text-align:center;transition:var(--trans);position:relative}
+.partner-card:hover{border-color:var(--border-md);box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.partner-avatar{width:96px;height:96px;border-radius:50%;border:1px solid var(--border-md);background:var(--bg-deep);display:flex;align-items:center;justify-content:center;margin:0 auto 1.8rem;font-family:var(--ff-title);font-size:2rem;font-weight:300;color:var(--gold);position:relative}
+.partner-avatar::before{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--border)}
+.partner-name{font-family:var(--ff-title);font-size:1.5rem;font-weight:400;color:var(--cream);margin-bottom:.3rem}
+.partner-years{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem}
+.partner-school{font-size:.8rem;color:var(--muted);margin-bottom:1.2rem}
+.partner-desc{font-size:.85rem;color:var(--muted);line-height:1.7}
+
+/* ── TESTIMONIALS ── */
+.testimonials{padding:7rem 0;background:var(--bg)}
+.testimonials-header{text-align:center;margin-bottom:4rem}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.testimonial-card{background:var(--bg-card);border:1px solid var(--border);padding:2.5rem;position:relative;transition:var(--trans)}
+.testimonial-card:hover{border-color:var(--border-md);box-shadow:var(--shadow)}
+.testimonial-quote{font-family:var(--ff-title);font-size:4rem;line-height:.8;color:var(--gold);opacity:.35;margin-bottom:1.2rem}
+.testimonial-text{font-family:var(--ff-title);font-style:italic;font-size:1.1rem;color:var(--cream);line-height:1.7;margin-bottom:1.8rem}
+.testimonial-stars{display:flex;gap:3px;margin-bottom:1.2rem}
+.testimonial-stars svg{width:14px;height:14px;fill:var(--gold)}
+.testimonial-author strong{display:block;font-size:.85rem;font-weight:700;color:var(--cream);letter-spacing:.06em}
+.testimonial-author span{font-size:.75rem;color:var(--muted)}
+
+/* ── CTA ── */
+.cta-section{padding:7rem 0;background:var(--gold);text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'ECOLAW';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--ff-title);font-size:20vw;font-weight:300;color:rgba(0,0,0,.06);white-space:nowrap;pointer-events:none;letter-spacing:.1em}
+.cta-section .section-label{color:var(--bg-deep);opacity:.6}
+.cta-section .section-title{color:var(--bg-deep)}
+.cta-section p{color:rgba(26,26,26,.65);font-size:1rem;max-width:480px;margin:1.5rem auto 2.5rem}
+.cta-section .btn-solid{background:var(--bg-deep);color:var(--gold)}
+.cta-section .btn-solid:hover{background:var(--bg);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.cta-section .btn-outline{border-color:var(--bg-deep);color:var(--bg-deep)}
+.cta-section .btn-outline::before{background:var(--bg-deep)}
+.cta-section .btn-outline:hover{color:var(--gold)}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ── FAQ ── */
+.faq{padding:7rem 0;background:var(--bg-deep)}
+.faq-header{text-align:center;margin-bottom:4rem}
+.faq-list{max-width:780px;margin:0 auto;display:flex;flex-direction:column}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:first-child{border-top:1px solid var(--border)}
+.faq-q{width:100%;text-align:left;padding:1.6rem 0;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:var(--ff-title);font-size:1.1rem;font-weight:400;color:var(--cream);transition:color var(--trans)}
+.faq-q:hover{color:var(--gold)}
+.faq-icon{width:24px;height:24px;border:1px solid var(--border-md);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold);font-size:.9rem;transition:var(--trans)}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--gold);color:var(--bg-deep);border-color:var(--gold)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-a-inner{padding-bottom:1.6rem;color:var(--muted);font-size:.92rem;line-height:1.8}
+
+/* ── CONTACT ── */
+.contact{padding:7rem 0;background:var(--bg)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.contact-info p{color:var(--muted);margin-bottom:2.5rem;font-size:.95rem}
+.contact-data{display:flex;flex-direction:column;gap:1.4rem}
+.contact-data-item{display:flex;align-items:flex-start;gap:1rem}
+.contact-data-icon{width:40px;height:40px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-data-icon svg{width:19px;height:19px;stroke:var(--gold)}
+.contact-data-item strong{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.25rem}
+.contact-data-item span{font-size:.9rem;color:var(--cream)}
+.contact-form h3{font-family:var(--ff-title);font-size:1.8rem;font-weight:400;color:var(--cream);margin-bottom:.5rem}
+.contact-form p{font-size:.83rem;color:var(--muted);margin-bottom:2rem}
+.form-group{margin-bottom:1.2rem}
+.form-group label{display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg-card);border:1px solid var(--border);color:var(--cream);padding:.9rem 1.1rem;font-family:var(--ff-body);font-size:.9rem;transition:border-color var(--trans);outline:none;appearance:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold)}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(154,144,128,.5)}
+.form-group textarea{resize:vertical;min-height:110px}
+.form-group select option{background:var(--bg-card)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-submit{width:100%;padding:1rem;background:#25D366;color:#fff;font-family:var(--ff-body);font-size:.8rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:.7rem;transition:var(--trans);margin-top:.5rem}
+.form-submit svg{width:18px;height:18px;fill:#fff;flex-shrink:0}
+.form-submit:hover{background:#1ebe5d;transform:translateY(-2px)}
+
+/* ── FOOTER ── */
+.footer{background:var(--bg-deep);border-top:1px solid var(--border);padding:4rem 0 2rem}
+.footer-main{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:4rem;margin-bottom:3rem}
+.footer-logo-name{font-family:var(--ff-title);font-size:2rem;font-weight:300;letter-spacing:.18em;color:var(--cream)}
+.footer-logo-tagline{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:block}
+.footer-brand p{font-size:.85rem;color:var(--muted);line-height:1.8;max-width:300px}
+.footer-col h4{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem}
+.footer-col ul{display:flex;flex-direction:column;gap:.7rem}
+.footer-col ul a{font-size:.85rem;color:var(--muted);transition:color var(--trans)}
+.footer-col ul a:hover{color:var(--cream)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:1.8rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.footer-bottom p,.footer-bottom small{font-size:.72rem;color:var(--muted);line-height:1.6}
+.footer-disclaimer{font-size:.7rem;color:rgba(154,144,128,.5);text-align:right;max-width:450px}
+
+/* ── WA FLOAT ── */
+.wa-float{position:fixed;bottom:2rem;right:2rem;z-index:200;display:flex;flex-direction:column;align-items:flex-end;gap:.8rem}
+.wa-tooltip{background:var(--bg-card);border:1px solid var(--border);color:var(--cream);font-size:.8rem;padding:.6rem 1rem;white-space:nowrap;box-shadow:var(--shadow);animation:tooltipFade 4s forwards;pointer-events:none}
+@keyframes tooltipFade{0%{opacity:0;transform:translateY(4px)}15%{opacity:1;transform:translateY(0)}75%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-4px)}}
+.wa-btn{width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.35);transition:var(--trans);position:relative}
+.wa-btn:hover{background:#1ebe5d;transform:scale(1.08);box-shadow:0 6px 30px rgba(37,211,102,.5)}
+.wa-btn svg{width:28px;height:28px;fill:#fff}
+.wa-btn::before{content:'';position:absolute;width:58px;height:58px;border-radius:50%;border:2px solid rgba(37,211,102,.4);animation:pulse 2s infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.6);opacity:0}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .hero-content{padding:4rem 0}
+  .hero-stats{gap:2rem}
+  .trust-divider{display:none}
+  .trust-grid{gap:1rem}
+  .trust-item{min-width:140px}
+  .problem-grid{grid-template-columns:1fr;gap:3rem}
+  .problem-cards{grid-template-columns:1fr 1fr}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .process-steps{grid-template-columns:1fr 1fr;gap:3rem}
+  .process-steps::before{display:none}
+  .partners-grid{grid-template-columns:1fr;max-width:380px}
+  .testimonials-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr;gap:3rem}
+  .footer-main{grid-template-columns:1fr;gap:2.5rem}
+  .footer-bottom{flex-direction:column}
+  .footer-disclaimer{text-align:left}
+  .form-row{grid-template-columns:1fr}
+  .lang-toggle{display:none}
+}
+@media(max-width:480px){
+  .services-grid{grid-template-columns:1fr}
+  .problem-cards{grid-template-columns:1fr}
+  .hero-headline{font-size:2.4rem}
+  .hero-actions{flex-direction:column}
+  .hero-actions .btn-outline,.hero-actions .btn-solid{justify-content:center}
+  .process-steps{grid-template-columns:1fr}
+  .trust-grid{flex-direction:column}
+  .cta-actions{flex-direction:column;align-items:center}
 }
 </style>
 </head>
 <body>
 
-
-<!-- ═══ NAV ═══ -->
+<!-- NAV -->
 <nav class="nav" id="mainNav">
   <div class="container nav-inner">
     <a href="#inicio" class="nav-logo">
       <img src="ecolaw-logo.png" alt="Ecolaw Real Estate &amp; Law" class="nav-logo-img">
     </a>
-
     <ul class="nav-links">
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#proceso">Proceso</a></li>
-      <li><a href="#socios">El Despacho</a></li>
+      <li><a href="#servicios" data-i18n="nav.services">Servicios</a></li>
+      <li><a href="#proceso" data-i18n="nav.process">Proceso</a></li>
+      <li><a href="#socios" data-i18n="nav.firm">El Despacho</a></li>
       <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
     </ul>
-
-    <a href="#contacto" class="nav-cta">Consulta gratuita</a>
-
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btnEs" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" id="btnEn" onclick="setLang('en')">EN</button>
+      </div>
+      <a href="#contacto" class="nav-cta" data-i18n="nav.cta">Consulta gratuita</a>
+    </div>
     <button class="hamburger" id="hamburger" aria-label="Menú">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<!-- Mobile menu -->
+<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-close" id="mobileClose" aria-label="Cerrar">✕</button>
-  <a href="#servicios" class="mobile-link">Servicios</a>
-  <a href="#proceso" class="mobile-link">Proceso</a>
-  <a href="#socios" class="mobile-link">El Despacho</a>
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#servicios" class="mobile-link" data-i18n="nav.services">Servicios</a>
+  <a href="#proceso" class="mobile-link" data-i18n="nav.process">Proceso</a>
+  <a href="#socios" class="mobile-link" data-i18n="nav.firm">El Despacho</a>
   <a href="#faq" class="mobile-link">FAQ</a>
-  <a href="#contacto" class="mobile-link">Contacto</a>
+  <a href="#contacto" class="mobile-link" data-i18n="nav.contact">Contacto</a>
+  <div class="mobile-lang">
+    <button class="active" id="mBtnEs" onclick="setLang('es')">ES</button>
+    <button id="mBtnEn" onclick="setLang('en')">EN</button>
+  </div>
 </div>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <section class="hero" id="inicio">
-  <div class="hero-bg">
-    <div class="hero-grid"></div>
-  </div>
+  <div class="hero-bg"><div class="hero-grid"></div></div>
   <div class="hero-deco-text">ECO</div>
-
   <img src="ecolaw-logo.png" alt="" class="hero-bird">
-
   <div class="container">
     <div class="hero-content">
-      <div class="hero-eyebrow reveal">Despacho Jurídico Especializado — Nayarit, México</div>
-
-      <h1 class="hero-headline reveal reveal-delay-1">
-        Su patrimonio<br>
-        merece una <em>defensa<br>
-        extraordinaria.</em>
+      <div class="hero-eyebrow reveal" data-i18n="hero.eyebrow">Despacho Jurídico Especializado — Nayarit, México</div>
+      <h1 class="hero-headline reveal reveal-delay-1" data-i18n-html="hero.headline">
+        Su patrimonio<br>merece una <em>defensa<br>extraordinaria.</em>
       </h1>
-
-      <p class="hero-sub reveal reveal-delay-2">
+      <p class="hero-sub reveal reveal-delay-2" data-i18n="hero.sub">
         Expertos en derecho agrario, inmobiliario y civil con más de 50 años de experiencia combinada. Protegemos su tierra, su herencia y su tranquilidad.
       </p>
-
       <div class="hero-actions reveal reveal-delay-3">
-        <a href="#contacto" class="btn-solid"><span>Consulta gratuita</span> →</a>
-        <a href="#servicios" class="btn-outline"><span>Ver servicios</span></a>
+        <a href="#contacto" class="btn-solid"><span data-i18n="hero.cta1">Consulta gratuita</span> →</a>
+        <a href="#servicios" class="btn-outline"><span data-i18n="hero.cta2">Ver servicios</span></a>
       </div>
-
       <div class="hero-stats reveal reveal-delay-4">
         <div class="hero-stat">
           <span class="hero-stat-num">50+</span>
-          <span class="hero-stat-label">Años de experiencia</span>
+          <span class="hero-stat-label" data-i18n="hero.stat1">Años de experiencia</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-num">2</span>
-          <span class="hero-stat-label">Socios fundadores</span>
+          <span class="hero-stat-label" data-i18n="hero.stat2">Socios fundadores</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-num">100%</span>
-          <span class="hero-stat-label">Especialización</span>
+          <span class="hero-stat-label" data-i18n="hero.stat3">Especialización</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ TRUST SIGNALS ═══ -->
+<!-- TRUST -->
 <div class="trust">
   <div class="container">
     <div class="trust-grid">
       <div class="trust-item">
         <span class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/></svg></span>
         <div class="trust-text">
-          <strong>Cédula profesional</strong>
-          <span>Registrada ante SEP</span>
+          <strong data-i18n="trust.t1">Cédula profesional</strong>
+          <span data-i18n="trust.s1">Registrada ante SEP</span>
         </div>
       </div>
       <div class="trust-divider"></div>
       <div class="trust-item">
         <span class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
         <div class="trust-text">
-          <strong>Respuesta en 24h</strong>
-          <span>Atención prioritaria</span>
+          <strong data-i18n="trust.t2">Respuesta en 24h</strong>
+          <span data-i18n="trust.s2">Atención prioritaria</span>
         </div>
       </div>
       <div class="trust-divider"></div>
       <div class="trust-item">
         <span class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
         <div class="trust-text">
-          <strong>Consulta gratuita</strong>
-          <span>Sin compromiso</span>
+          <strong data-i18n="trust.t3">Consulta gratuita</strong>
+          <span data-i18n="trust.s3">Sin compromiso</span>
         </div>
       </div>
       <div class="trust-divider"></div>
       <div class="trust-item">
         <span class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18M9 21V9"/></svg></span>
         <div class="trust-text">
-          <strong>Personas y empresas</strong>
-          <span>Particulares y corporativo</span>
+          <strong data-i18n="trust.t4">Personas y empresas</strong>
+          <span data-i18n="trust.s4">Particulares y corporativo</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══ PROBLEMA / SOLUCIÓN ═══ -->
+<!-- PROBLEMA -->
 <section class="problem" id="problema">
   <div class="container">
     <div class="problem-grid">
       <div class="problem-text reveal">
-        <span class="section-label">El problema</span>
-        <h2 class="section-title">Los conflictos<br>de tierra no<br>esperan.</h2>
+        <span class="section-label" data-i18n="prob.label">El problema</span>
+        <h2 class="section-title" data-i18n-html="prob.title">Los conflictos<br>de tierra no<br>esperan.</h2>
         <span class="gold-line"></span>
-        <p>
-          Un terreno sin regularizar, una herencia disputada o un documento con vicios puede costar años de litigios innecesarios — y perder lo que con tanto esfuerzo construyó.
-        </p>
-        <p>
-          En Ecolaw entendemos que cada caso es único. Combinamos décadas de experiencia en derecho agrario e inmobiliario con una estrategia clara, honesta y orientada a resultados.
-        </p>
-        <a href="#contacto" class="btn-outline" style="margin-top:1.5rem"><span>Evalúe su caso hoy</span> →</a>
+        <p data-i18n="prob.p1">Un terreno sin regularizar, una herencia disputada o un documento con vicios puede costar años de litigios innecesarios — y perder lo que con tanto esfuerzo construyó.</p>
+        <p data-i18n="prob.p2">En Ecolaw entendemos que cada caso es único. Combinamos décadas de experiencia en derecho agrario e inmobiliario con una estrategia clara, honesta y orientada a resultados.</p>
+        <a href="#contacto" class="btn-outline" style="margin-top:1.5rem"><span data-i18n="prob.cta">Evalúe su caso hoy</span> →</a>
       </div>
-
       <div class="problem-cards">
         <div class="problem-card reveal reveal-delay-1">
           <div class="problem-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-          <h4>Tierra sin papeles</h4>
-          <p>Ejidos, predios y propiedades sin escritura en regla que no pueden venderse ni heredarse.</p>
+          <h4 data-i18n="prob.c1t">Tierra sin papeles</h4>
+          <p data-i18n="prob.c1d">Ejidos, predios y propiedades sin escritura en regla que no pueden venderse ni heredarse.</p>
         </div>
         <div class="problem-card reveal reveal-delay-2">
           <div class="problem-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M6 21H3a1 1 0 0 1-1-1V8l4-5 4 5v12a1 1 0 0 1-1 1z"/><path d="M18 21h3a1 1 0 0 0 1-1V8l-4-5-4 5v12a1 1 0 0 0 1 1z"/></svg></div>
-          <h4>Herencias complicadas</h4>
-          <p>Sucesiones agrarias con múltiples herederos, documentos incompletos o fallos previos.</p>
+          <h4 data-i18n="prob.c2t">Herencias complicadas</h4>
+          <p data-i18n="prob.c2d">Sucesiones agrarias con múltiples herederos, documentos incompletos o fallos previos.</p>
         </div>
         <div class="problem-card reveal reveal-delay-3">
           <div class="problem-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg></div>
-          <h4>Contratos nulos</h4>
-          <p>Actos jurídicos con defectos de forma o fondo que ponen en riesgo su inversión.</p>
+          <h4 data-i18n="prob.c3t">Contratos nulos</h4>
+          <p data-i18n="prob.c3d">Actos jurídicos con defectos de forma o fondo que ponen en riesgo su inversión.</p>
         </div>
         <div class="problem-card reveal reveal-delay-4">
           <div class="problem-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          <h4>Posesión disputada</h4>
-          <p>Conflictos de posesión y usucapión donde el tiempo y la estrategia legal son decisivos.</p>
+          <h4 data-i18n="prob.c4t">Posesión disputada</h4>
+          <p data-i18n="prob.c4d">Conflictos de posesión y usucapión donde el tiempo y la estrategia legal son decisivos.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ SERVICIOS ═══ -->
+<!-- SERVICIOS -->
 <section class="services" id="servicios">
   <div class="container">
     <div class="services-header">
-      <span class="section-label reveal">Áreas de práctica</span>
-      <h2 class="section-title reveal reveal-delay-1">Servicios <em>especializados</em></h2>
+      <span class="section-label reveal" data-i18n="srv.label">Áreas de práctica</span>
+      <h2 class="section-title reveal reveal-delay-1"><span data-i18n="srv.title">Servicios</span> <em data-i18n="srv.titleem">especializados</em></h2>
       <span class="gold-line center reveal reveal-delay-2"></span>
     </div>
-
     <div class="services-grid">
       <div class="service-card reveal">
         <span class="service-num">01</span>
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 2C6.5 2 2 6.5 2 12"/><path d="M12 6c3.3 0 6 2.7 6 6"/><path d="M12 6c-3.3 0-6 2.7-6 6"/><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg></div>
-        <h3 class="service-title">Regularización de Ejidos</h3>
-        <p class="service-desc">Asesoría y representación ante el Registro Agrario Nacional para la titulación y regularización de terrenos ejidales. Convertimos tierras en patrimonio seguro.</p>
-        <span class="service-arrow">Saber más →</span>
+        <h3 class="service-title" data-i18n="srv.1t">Regularización de Ejidos</h3>
+        <p class="service-desc" data-i18n="srv.1d">Asesoría y representación ante el Registro Agrario Nacional para la titulación y regularización de terrenos ejidales. Convertimos tierras en patrimonio seguro.</p>
+        <span class="service-arrow" data-i18n="srv.more">Saber más →</span>
       </div>
-
       <div class="service-card reveal reveal-delay-1">
         <span class="service-num">02</span>
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="3" y1="11" x2="21" y2="11"/><polyline points="3 6 12 2 21 6"/><line x1="6" y1="11" x2="6" y2="22"/><line x1="10" y1="11" x2="10" y2="22"/><line x1="14" y1="11" x2="14" y2="22"/><line x1="18" y1="11" x2="18" y2="22"/></svg></div>
-        <h3 class="service-title">Juicios Sucesorios Agrarios</h3>
-        <p class="service-desc">Tramitación completa de sucesiones ante el Tribunal Agrario. Garantizamos que su herencia quede en manos de quienes corresponde, con plena certeza jurídica.</p>
-        <span class="service-arrow">Saber más →</span>
+        <h3 class="service-title" data-i18n="srv.2t">Juicios Sucesorios Agrarios</h3>
+        <p class="service-desc" data-i18n="srv.2d">Tramitación completa de sucesiones ante el Tribunal Agrario. Garantizamos que su herencia quede en manos de quienes corresponde, con plena certeza jurídica.</p>
+        <span class="service-arrow" data-i18n="srv.more">Saber más →</span>
       </div>
-
       <div class="service-card reveal reveal-delay-2">
         <span class="service-num">03</span>
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
-        <h3 class="service-title">Juicios de Nulidad</h3>
-        <p class="service-desc">Impugnación de actos y contratos con vicios de nulidad absoluta o relativa. Protegemos su inversión cuando el documento no cumple los requisitos de ley.</p>
-        <span class="service-arrow">Saber más →</span>
+        <h3 class="service-title" data-i18n="srv.3t">Juicios de Nulidad</h3>
+        <p class="service-desc" data-i18n="srv.3d">Impugnación de actos y contratos con vicios de nulidad absoluta o relativa. Protegemos su inversión cuando el documento no cumple los requisitos de ley.</p>
+        <span class="service-arrow" data-i18n="srv.more">Saber más →</span>
       </div>
-
       <div class="service-card reveal reveal-delay-1">
         <span class="service-num">04</span>
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.2a7 7 0 0 0-10 0V22"/><path d="M7 2v4.2a7 7 0 0 0 10 0V2"/></svg></div>
-        <h3 class="service-title">Usucapión / Prescripción</h3>
-        <p class="service-desc">Si usted lleva años poseyendo un bien de buena fe, la ley puede estar de su lado. Gestionamos el juicio de usucapión para obtener la propiedad legítima.</p>
-        <span class="service-arrow">Saber más →</span>
+        <h3 class="service-title" data-i18n="srv.4t">Usucapión / Prescripción</h3>
+        <p class="service-desc" data-i18n="srv.4d">Si usted lleva años poseyendo un bien de buena fe, la ley puede estar de su lado. Gestionamos el juicio de usucapión para obtener la propiedad legítima.</p>
+        <span class="service-arrow" data-i18n="srv.more">Saber más →</span>
       </div>
-
       <div class="service-card reveal reveal-delay-2">
         <span class="service-num">05</span>
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg></div>
-        <h3 class="service-title">Derecho Civil</h3>
-        <p class="service-desc">Contratos de compraventa, arrendamiento, donación y permuta. Revisión y redacción de documentos que resguardan su patrimonio ante cualquier contingencia.</p>
-        <span class="service-arrow">Saber más →</span>
+        <h3 class="service-title" data-i18n="srv.5t">Derecho Civil</h3>
+        <p class="service-desc" data-i18n="srv.5d">Contratos de compraventa, arrendamiento, donación y permuta. Revisión y redacción de documentos que resguardan su patrimonio ante cualquier contingencia.</p>
+        <span class="service-arrow" data-i18n="srv.more">Saber más →</span>
       </div>
-
       <div class="service-card reveal reveal-delay-3">
         <span class="service-num">06</span>
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <h3 class="service-title">Asesoría Preventiva</h3>
-        <p class="service-desc">El mejor litigio es el que nunca ocurre. Le acompañamos en due diligence de propiedades, revisión de títulos y planeación patrimonial para evitar conflictos futuros.</p>
-        <span class="service-arrow">Saber más →</span>
+        <h3 class="service-title" data-i18n="srv.6t">Asesoría Preventiva</h3>
+        <p class="service-desc" data-i18n="srv.6d">El mejor litigio es el que nunca ocurre. Le acompañamos en due diligence de propiedades, revisión de títulos y planeación patrimonial para evitar conflictos futuros.</p>
+        <span class="service-arrow" data-i18n="srv.more">Saber más →</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ PROCESO ═══ -->
+<!-- PROCESO -->
 <section class="process" id="proceso">
   <div class="container">
     <div class="process-header">
-      <span class="section-label reveal">Cómo trabajamos</span>
-      <h2 class="section-title reveal reveal-delay-1">Un proceso <em>transparente</em><br>desde el primer día</h2>
+      <span class="section-label reveal" data-i18n="prc.label">Cómo trabajamos</span>
+      <h2 class="section-title reveal reveal-delay-1" data-i18n-html="prc.title">Un proceso <em>transparente</em><br>desde el primer día</h2>
       <span class="gold-line center reveal reveal-delay-2"></span>
     </div>
-
     <div class="process-steps">
       <div class="process-step reveal">
         <div class="step-num">I</div>
-        <h3 class="step-title">Consulta gratuita</h3>
-        <p class="step-desc">Platíquenos su situación sin costo ni compromiso. Escuchamos cada detalle para entender el alcance real de su caso.</p>
+        <h3 class="step-title" data-i18n="prc.1t">Consulta gratuita</h3>
+        <p class="step-desc" data-i18n="prc.1d">Platíquenos su situación sin costo ni compromiso. Escuchamos cada detalle para entender el alcance real de su caso.</p>
       </div>
       <div class="process-step reveal reveal-delay-1">
         <div class="step-num">II</div>
-        <h3 class="step-title">Diagnóstico jurídico</h3>
-        <p class="step-desc">Analizamos documentos, antecedentes y viabilidad legal. Le entregamos un dictamen claro sobre sus opciones y probabilidades.</p>
+        <h3 class="step-title" data-i18n="prc.2t">Diagnóstico jurídico</h3>
+        <p class="step-desc" data-i18n="prc.2d">Analizamos documentos, antecedentes y viabilidad legal. Le entregamos un dictamen claro sobre sus opciones y probabilidades.</p>
       </div>
       <div class="process-step reveal reveal-delay-2">
         <div class="step-num">III</div>
-        <h3 class="step-title">Propuesta estratégica</h3>
-        <p class="step-desc">Diseñamos la ruta más eficiente: tiempos, costos y etapas. Usted decide con información completa, nunca a ciegas.</p>
+        <h3 class="step-title" data-i18n="prc.3t">Propuesta estratégica</h3>
+        <p class="step-desc" data-i18n="prc.3d">Diseñamos la ruta más eficiente: tiempos, costos y etapas. Usted decide con información completa, nunca a ciegas.</p>
       </div>
       <div class="process-step reveal reveal-delay-3">
         <div class="step-num">IV</div>
-        <h3 class="step-title">Representación plena</h3>
-        <p class="step-desc">Nos hacemos cargo ante el tribunal, autoridad o notaría. Usted recibe reportes periódicos y acceso directo a su abogado.</p>
+        <h3 class="step-title" data-i18n="prc.4t">Representación plena</h3>
+        <p class="step-desc" data-i18n="prc.4d">Nos hacemos cargo ante el tribunal, autoridad o notaría. Usted recibe reportes periódicos y acceso directo a su abogado.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Separador colibrí -->
+<!-- SEPARADOR -->
 <div class="bird-separator">
   <svg viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g fill="#c9a032">
-      <ellipse cx="40" cy="28" rx="14" ry="8"/>
-      <path d="M40 23 C51 15 68 13 64 22 C60 28 44 27 40 23Z"/>
-      <path d="M40 23 C30 17 18 16 21 23 C24 27 38 26 40 23Z"/>
-      <path d="M54 22 L78 17 L76 21 L54 25Z"/>
-      <circle cx="52.5" cy="22" r="2.5"/>
-    </g>
+    <g fill="#c9a032"><ellipse cx="40" cy="28" rx="14" ry="8"/><path d="M40 23 C51 15 68 13 64 22 C60 28 44 27 40 23Z"/><path d="M40 23 C30 17 18 16 21 23 C24 27 38 26 40 23Z"/><path d="M54 22 L78 17 L76 21 L54 25Z"/><circle cx="52.5" cy="22" r="2.5"/></g>
     <line x1="5" y1="30" x2="26" y2="30" stroke="#c9a032" stroke-width="0.5" opacity="0.4"/>
     <line x1="54" y1="30" x2="75" y2="30" stroke="#c9a032" stroke-width="0.5" opacity="0.4"/>
   </svg>
 </div>
 
-<!-- ═══ SOCIOS FUNDADORES ═══ -->
+<!-- SOCIOS -->
 <section class="partners" id="socios">
   <div class="container">
     <div class="partners-header">
-      <span class="section-label reveal">Quiénes somos</span>
-      <h2 class="section-title reveal reveal-delay-1">Socios <em>fundadores</em></h2>
+      <span class="section-label reveal" data-i18n="prt.label">Quiénes somos</span>
+      <h2 class="section-title reveal reveal-delay-1"><span data-i18n="prt.title">Socios</span> <em data-i18n="prt.titleem">fundadores</em></h2>
       <span class="gold-line center reveal reveal-delay-2"></span>
-      <p class="muted reveal reveal-delay-3" style="max-width:520px;margin:1.5rem auto 0;font-size:0.95rem;line-height:1.8;">
+      <p class="muted reveal reveal-delay-3" style="max-width:520px;margin:1.5rem auto 0;font-size:.95rem;line-height:1.8;" data-i18n="prt.intro">
         Dos abogados con más de cinco décadas de experiencia combinada, formados en la Universidad Autónoma de Nayarit y forjados en la práctica real del derecho agrario e inmobiliario.
       </p>
     </div>
-
     <div class="partners-grid">
       <div class="partner-card reveal">
         <div class="partner-avatar">YB</div>
         <h3 class="partner-name">Yadira Lizbeth Borrayo Fregoso</h3>
-        <div class="partner-years">20 años de experiencia</div>
+        <div class="partner-years" data-i18n="prt.y1">20 años de experiencia</div>
         <div class="partner-school">Universidad Autónoma de Nayarit</div>
-        <p class="partner-desc">Especialista en derecho agrario y sucesiones. Ha representado a centenares de familias en la regularización de su patrimonio y la defensa de sus derechos ante el Tribunal Agrario.</p>
+        <p class="partner-desc" data-i18n="prt.d1">Especialista en derecho agrario y sucesiones. Ha representado a centenares de familias en la regularización de su patrimonio y la defensa de sus derechos ante el Tribunal Agrario.</p>
       </div>
-
       <div class="partner-card reveal reveal-delay-2">
         <div class="partner-avatar">MM</div>
         <h3 class="partner-name">Marcos Manuel Moncada Rafael</h3>
-        <div class="partner-years">30 años de experiencia</div>
+        <div class="partner-years" data-i18n="prt.y2">30 años de experiencia</div>
         <div class="partner-school">Universidad Autónoma de Nayarit</div>
-        <p class="partner-desc">Pionero en litigios de usucapión y juicios de nulidad en la región. Su trayectoria combina la defensa civil con la planeación patrimonial para personas físicas y morales.</p>
+        <p class="partner-desc" data-i18n="prt.d2">Pionero en litigios de usucapión y juicios de nulidad en la región. Su trayectoria combina la defensa civil con la planeación patrimonial para personas físicas y morales.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ TESTIMONIOS ═══ -->
+<!-- TESTIMONIOS -->
 <section class="testimonials" id="testimonios">
   <div class="container">
     <div class="testimonials-header">
-      <span class="section-label reveal">Casos reales</span>
-      <h2 class="section-title reveal reveal-delay-1">Lo que dicen<br><em>nuestros clientes</em></h2>
+      <span class="section-label reveal" data-i18n="tst.label">Casos reales</span>
+      <h2 class="section-title reveal reveal-delay-1" data-i18n-html="tst.title">Lo que dicen<br><em>nuestros clientes</em></h2>
       <span class="gold-line center reveal reveal-delay-2"></span>
     </div>
-
     <div class="testimonials-grid">
       <div class="testimonial-card reveal">
         <div class="testimonial-quote">"</div>
         <p class="testimonial-text">Llevaba 12 años sin poder vender mi terreno ejidal porque no tenía escrituras. En menos de 8 meses Ecolaw resolvió lo que parecía imposible. Hoy tengo mis títulos en regla.</p>
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-author">
-          <strong>Roberto A.</strong>
-          <span>Regularización ejidal — Tepic, Nayarit</span>
+        <div class="testimonial-stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
+        <div class="testimonial-author"><strong>Roberto A.</strong><span>Regularización ejidal — Tepic, Nayarit</span></div>
       </div>
-
       <div class="testimonial-card reveal reveal-delay-1">
         <div class="testimonial-quote">"</div>
         <p class="testimonial-text">Mi madre falleció sin testamento y había disputa entre hermanos. El Lic. Moncada manejó el juicio sucesorio con una claridad y respeto que nunca esperé. Resultado: herencia repartida sin conflicto.</p>
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-author">
-          <strong>Lucía M.</strong>
-          <span>Juicio sucesorio — Santiago Ixcuintla</span>
+        <div class="testimonial-stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
+        <div class="testimonial-author"><strong>Lucía M.</strong><span>Juicio sucesorio — Santiago Ixcuintla</span></div>
       </div>
-
       <div class="testimonial-card reveal reveal-delay-2">
         <div class="testimonial-quote">"</div>
         <p class="testimonial-text">Compré un terreno y descubrí que el contrato tenía irregularidades. La Lic. Borrayo identificó el vicio en 48 horas y logramos la nulidad. Recuperé mi inversión completa.</p>
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-author">
-          <strong>Ing. Carlos R.</strong>
-          <span>Juicio de nulidad — Bahía de Banderas</span>
+        <div class="testimonial-stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
+        <div class="testimonial-author"><strong>Ing. Carlos R.</strong><span>Juicio de nulidad — Bahía de Banderas</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ CTA CENTRAL ═══ -->
+<!-- CTA -->
 <section class="cta-section">
   <div class="container">
-    <span class="section-label reveal">Dé el primer paso</span>
-    <h2 class="section-title reveal reveal-delay-1">Su caso tiene<br>solución jurídica.</h2>
-    <p class="reveal reveal-delay-2">No espere más. Una consulta gratuita puede cambiar el rumbo de su patrimonio. Hable hoy con uno de nuestros socios.</p>
+    <span class="section-label reveal" data-i18n="cta.label">Dé el primer paso</span>
+    <h2 class="section-title reveal reveal-delay-1" data-i18n-html="cta.title">Su caso tiene<br>solución jurídica.</h2>
+    <p class="reveal reveal-delay-2" data-i18n="cta.sub">No espere más. Una consulta gratuita puede cambiar el rumbo de su patrimonio. Hable hoy con uno de nuestros socios.</p>
     <div class="cta-actions reveal reveal-delay-3">
-      <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20agendar%20una%20consulta%20gratuita%20con%20Ecolaw." class="btn-solid" target="_blank" rel="noopener">Agendar por WhatsApp</a>
-      <a href="tel:+523312345678" class="btn-outline"><span>Llamar ahora</span></a>
+      <a href="https://wa.me/523111030697?text=Hola%2C%20quiero%20agendar%20una%20consulta%20gratuita%20con%20Ecolaw." class="btn-solid" target="_blank" rel="noopener" data-i18n="cta.wa">Agendar por WhatsApp</a>
+      <a href="tel:+523111030697" class="btn-outline"><span data-i18n="cta.call">Llamar ahora</span></a>
     </div>
   </div>
 </section>
 
-<!-- ═══ FAQ ═══ -->
+<!-- FAQ -->
 <section class="faq" id="faq">
   <div class="container">
     <div class="faq-header">
-      <span class="section-label reveal">Preguntas frecuentes</span>
-      <h2 class="section-title reveal reveal-delay-1">Lo que más<br><em>nos preguntan</em></h2>
+      <span class="section-label reveal" data-i18n="faq.label">Preguntas frecuentes</span>
+      <h2 class="section-title reveal reveal-delay-1" data-i18n-html="faq.title">Lo que más<br><em>nos preguntan</em></h2>
       <span class="gold-line center reveal reveal-delay-2"></span>
     </div>
-
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q">
-          ¿Cuánto cuesta la primera consulta?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a">
-          <div class="faq-a-inner">
-            La consulta inicial es completamente gratuita y sin compromiso. En ella evaluamos su situación, le explicamos sus opciones legales y le damos un panorama claro de tiempos y costos antes de cualquier contratación.
-          </div>
-        </div>
+        <button class="faq-q"><span data-i18n="faq.q1">¿Cuánto cuesta la primera consulta?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a1">La consulta inicial es completamente gratuita y sin compromiso. En ella evaluamos su situación, le explicamos sus opciones legales y le damos un panorama claro de tiempos y costos antes de cualquier contratación.</div></div>
       </div>
-
       <div class="faq-item">
-        <button class="faq-q">
-          ¿Cuánto tiempo tarda regularizar un ejido?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a">
-          <div class="faq-a-inner">
-            Depende del tipo de trámite y la situación documental del predio. En general, los procesos ante el Registro Agrario Nacional pueden durar entre 4 y 18 meses. Le daremos un estimado específico una vez que revisemos su caso.
-          </div>
-        </div>
+        <button class="faq-q"><span data-i18n="faq.q2">¿Cuánto tiempo tarda regularizar un ejido?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a2">Depende del tipo de trámite y la situación documental del predio. En general, los procesos ante el Registro Agrario Nacional pueden durar entre 4 y 18 meses. Le daremos un estimado específico una vez que revisemos su caso.</div></div>
       </div>
-
       <div class="faq-item">
-        <button class="faq-q">
-          ¿Trabajan con clientes fuera de Nayarit?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a">
-          <div class="faq-a-inner">
-            Sí. Si el bien o el conflicto está en Nayarit podemos representarle sin importar donde usted resida. Manejamos casos de mexicanos en el extranjero y clientes en distintos estados del país. Coordinamos todo vía digital.
-          </div>
-        </div>
+        <button class="faq-q"><span data-i18n="faq.q3">¿Trabajan con clientes fuera de Nayarit?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a3">Sí. Si el bien o el conflicto está en Nayarit podemos representarle sin importar donde usted resida. Manejamos casos de mexicanos en el extranjero y clientes en distintos estados del país. Coordinamos todo vía digital.</div></div>
       </div>
-
       <div class="faq-item">
-        <button class="faq-q">
-          ¿Pueden ayudarme si no tengo ningún documento?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a">
-          <div class="faq-a-inner">
-            Es uno de los escenarios más comunes. A través de testigos, posesión continua, pago de impuestos prediales y otros elementos, muchas veces es posible construir un expediente legal sólido. Contáctenos y evaluamos su caso específico.
-          </div>
-        </div>
+        <button class="faq-q"><span data-i18n="faq.q4">¿Pueden ayudarme si no tengo ningún documento?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a4">Es uno de los escenarios más comunes. A través de testigos, posesión continua, pago de impuestos prediales y otros elementos, muchas veces es posible construir un expediente legal sólido. Contáctenos y evaluamos su caso específico.</div></div>
       </div>
-
       <div class="faq-item">
-        <button class="faq-q">
-          ¿Cómo se calculan sus honorarios?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a">
-          <div class="faq-a-inner">
-            Los honorarios se determinan según la complejidad del caso, el tipo de trámite y los tiempos estimados. Le presentamos una propuesta transparente por escrito antes de comenzar. No hay costos ocultos ni sorpresas a mitad del proceso.
-          </div>
-        </div>
+        <button class="faq-q"><span data-i18n="faq.q5">¿Cómo se calculan sus honorarios?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a5">Los honorarios se determinan según la complejidad del caso, el tipo de trámite y los tiempos estimados. Le presentamos una propuesta transparente por escrito antes de comenzar. No hay costos ocultos ni sorpresas a mitad del proceso.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ CONTACTO ═══ -->
+<!-- CONTACTO -->
 <section class="contact" id="contacto">
   <div class="container">
     <div class="contact-grid">
       <div class="contact-info reveal">
-        <span class="section-label">Contacto</span>
-        <h2 class="section-title">Hablemos de<br>su <em>caso</em> hoy.</h2>
+        <span class="section-label" data-i18n="con.label">Contacto</span>
+        <h2 class="section-title" data-i18n-html="con.title">Hablemos de<br>su <em>caso</em> hoy.</h2>
         <span class="gold-line"></span>
-        <p>
-          Rellene el formulario y le contactaremos directamente por WhatsApp en las próximas horas. También puede llamarnos o escribirnos directamente.
-        </p>
-
+        <p data-i18n="con.intro">Rellene el formulario y le contactaremos directamente por WhatsApp en las próximas horas. También puede llamarnos o escribirnos directamente.</p>
         <div class="contact-data">
           <div class="contact-data-item">
             <div class="contact-data-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 5.55 5.55l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg></div>
             <div>
-              <strong>WhatsApp / Teléfono</strong>
-              <span>+52 331 234 5678</span>
+              <strong data-i18n="con.phone">WhatsApp / Teléfono</strong>
+              <span><a href="tel:+523111030697" style="color:var(--cream)">+52 311 103 0697</a></span>
             </div>
           </div>
           <div class="contact-data-item">
             <div class="contact-data-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
             <div>
-              <strong>Correo electrónico</strong>
-              <span>contacto@ecolaw.mx</span>
+              <strong data-i18n="con.email">Correo electrónico</strong>
+              <span><a href="mailto:Yadi.ecolex@gmail.com" style="color:var(--cream)">Yadi.ecolex@gmail.com</a></span>
             </div>
           </div>
           <div class="contact-data-item">
             <div class="contact-data-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
             <div>
-              <strong>Ubicación</strong>
-              <span>Tepic, Nayarit — México</span>
+              <strong data-i18n="con.addr">Oficinas</strong>
+              <span style="display:block;line-height:1.6;font-size:.85rem">
+                Calle Cascada #48, Fracc. Parque Ecológico<br>Tepic, Nayarit
+              </span>
+              <span style="display:block;line-height:1.6;font-size:.85rem;margin-top:.5rem;color:var(--muted)">
+                Av. Revolución #26 Local 2, Hotel Riviera Sayulita<br>Sayulita, Bahía de Banderas, Nayarit
+              </span>
             </div>
           </div>
           <div class="contact-data-item">
             <div class="contact-data-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
             <div>
-              <strong>Horario de atención</strong>
-              <span>Lun – Vie: 9:00 – 18:00</span>
+              <strong data-i18n="con.hours">Horario de atención</strong>
+              <span data-i18n="con.hoursval">Lun – Vie: 9:00 – 18:00</span>
             </div>
           </div>
         </div>
       </div>
 
       <div class="contact-form reveal reveal-delay-2">
-        <h3>Cuéntenos su situación</h3>
-        <p>El formulario abrirá WhatsApp con su mensaje listo para enviar.</p>
-
+        <h3 data-i18n="con.formtitle">Cuéntenos su situación</h3>
+        <p data-i18n="con.formsub">El formulario abrirá WhatsApp con su mensaje listo para enviar.</p>
         <form id="contactForm" onsubmit="return sendToWhatsApp(event)">
           <div class="form-row">
             <div class="form-group">
-              <label for="nombre">Nombre completo</label>
-              <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
+              <label data-i18n="con.fname">Nombre completo</label>
+              <input type="text" id="nombre" data-i18n-ph="con.fnameph" placeholder="Ej: Juan Pérez" required>
             </div>
             <div class="form-group">
-              <label for="telefono">Teléfono</label>
-              <input type="tel" id="telefono" placeholder="Ej: 311 123 4567">
+              <label data-i18n="con.fphone">Teléfono</label>
+              <input type="tel" id="telefono" data-i18n-ph="con.fphoneph" placeholder="Ej: 311 123 4567">
             </div>
           </div>
-
           <div class="form-group">
-            <label for="servicio">Tipo de asunto</label>
+            <label data-i18n="con.fservice">Tipo de asunto</label>
             <select id="servicio">
-              <option value="">Seleccione una opción</option>
-              <option>Regularización de Ejido</option>
-              <option>Juicio Sucesorio Agrario</option>
-              <option>Juicio de Nulidad</option>
-              <option>Usucapión / Prescripción</option>
-              <option>Derecho Civil / Contratos</option>
-              <option>Asesoría Preventiva</option>
-              <option>Otro</option>
+              <option value="" data-i18n="con.fopt0">Seleccione una opción</option>
+              <option data-i18n="con.fopt1">Regularización de Ejido</option>
+              <option data-i18n="con.fopt2">Juicio Sucesorio Agrario</option>
+              <option data-i18n="con.fopt3">Juicio de Nulidad</option>
+              <option data-i18n="con.fopt4">Usucapión / Prescripción</option>
+              <option data-i18n="con.fopt5">Derecho Civil / Contratos</option>
+              <option data-i18n="con.fopt6">Asesoría Preventiva</option>
+              <option data-i18n="con.fopt7">Otro</option>
             </select>
           </div>
-
           <div class="form-group">
-            <label for="mensaje">Describa brevemente su situación</label>
-            <textarea id="mensaje" placeholder="Cuéntenos qué está pasando con su propiedad o herencia…" required></textarea>
+            <label data-i18n="con.fmsg">Describa brevemente su situación</label>
+            <textarea id="mensaje" data-i18n-ph="con.fmsgph" placeholder="Cuéntenos qué está pasando con su propiedad o herencia…" required></textarea>
           </div>
-
           <button type="submit" class="form-submit">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            Enviar por WhatsApp
+            <span data-i18n="con.fsend">Enviar por WhatsApp</span>
           </button>
         </form>
       </div>
@@ -1811,196 +753,314 @@ ul { list-style: none; }
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer-main">
       <div class="footer-brand">
-        <img src="ecolaw-logo.png" alt="Ecolaw Real Estate &amp; Law" style="height:60px;width:auto;display:block;margin-bottom:0.8rem;">
-        <p>Despacho jurídico especializado en derecho agrario, inmobiliario y civil. Protegemos su patrimonio con experiencia, ética y resultados.</p>
+        <img src="ecolaw-logo.png" alt="Ecolaw" style="height:60px;width:auto;display:block;margin-bottom:.8rem;">
+        <p data-i18n="ft.about">Despacho jurídico especializado en derecho agrario, inmobiliario y civil. Protegemos su patrimonio con experiencia, ética y resultados.</p>
       </div>
-
       <div class="footer-col">
-        <h4>Servicios</h4>
+        <h4 data-i18n="ft.srv">Servicios</h4>
         <ul>
-          <li><a href="#servicios">Regularización de Ejidos</a></li>
-          <li><a href="#servicios">Juicios Sucesorios</a></li>
-          <li><a href="#servicios">Juicios de Nulidad</a></li>
-          <li><a href="#servicios">Usucapión</a></li>
-          <li><a href="#servicios">Derecho Civil</a></li>
-          <li><a href="#servicios">Asesoría Preventiva</a></li>
+          <li><a href="#servicios" data-i18n="srv.1t">Regularización de Ejidos</a></li>
+          <li><a href="#servicios" data-i18n="srv.2t">Juicios Sucesorios</a></li>
+          <li><a href="#servicios" data-i18n="srv.3t">Juicios de Nulidad</a></li>
+          <li><a href="#servicios" data-i18n="srv.4t">Usucapión</a></li>
+          <li><a href="#servicios" data-i18n="srv.5t">Derecho Civil</a></li>
+          <li><a href="#servicios" data-i18n="srv.6t">Asesoría Preventiva</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
-        <h4>Despacho</h4>
+        <h4 data-i18n="ft.firm">Despacho</h4>
         <ul>
-          <li><a href="#socios">Socios fundadores</a></li>
-          <li><a href="#proceso">Nuestro proceso</a></li>
-          <li><a href="#faq">Preguntas frecuentes</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-          <li><a href="https://wa.me/523312345678" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="#socios" data-i18n="prt.title">Socios fundadores</a></li>
+          <li><a href="#proceso" data-i18n="ft.ourprocess">Nuestro proceso</a></li>
+          <li><a href="#faq" data-i18n="faq.label">Preguntas frecuentes</a></li>
+          <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
+          <li><a href="https://wa.me/523111030697" target="_blank" rel="noopener">WhatsApp</a></li>
         </ul>
       </div>
     </div>
-
     <div class="footer-bottom">
-      <p>© 2025 Ecolaw Real Estate &amp; Law. Todos los derechos reservados.</p>
-      <small class="footer-disclaimer">
-        La información contenida en este sitio web es de carácter informativo y no constituye asesoría jurídica formal. Para obtener orientación legal específica para su caso, consulte directamente con nuestros abogados.
-      </small>
+      <p data-i18n="ft.copy">© 2025 Ecolaw Real Estate &amp; Law. Todos los derechos reservados.</p>
+      <small class="footer-disclaimer" data-i18n="ft.disc">La información contenida en este sitio web es de carácter informativo y no constituye asesoría jurídica formal. Para obtener orientación legal específica consulte directamente con nuestros abogados.</small>
     </div>
   </div>
 </footer>
 
-<!-- ═══ WHATSAPP FLOTANTE ═══ -->
+<!-- WA FLOAT -->
 <div class="wa-float" id="waFloat">
-  <div class="wa-tooltip" id="waTooltip">¿Dudas? Escríbanos ahora →</div>
-  <a href="https://wa.me/523312345678?text=Hola%2C%20me%20gustaría%20obtener%20información%20sobre%20los%20servicios%20de%20Ecolaw." class="wa-btn" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <div class="wa-tooltip" id="waTooltip" data-i18n="wa.tip">¿Dudas? Escríbanos ahora →</div>
+  <a href="https://wa.me/523111030697?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20Ecolaw." class="wa-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
   </a>
 </div>
 
-<!-- ═══════════════════════════════════════════
-   JAVASCRIPT
-═══════════════════════════════════════════ -->
 <script>
-// ── Nav scroll effect
-const nav = document.getElementById('mainNav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-}, { passive: true });
+// ── TRANSLATIONS ──────────────────────────────────────────
+const T = {
+  es: {
+    'nav.services':'Servicios','nav.process':'Proceso','nav.firm':'El Despacho',
+    'nav.contact':'Contacto','nav.cta':'Consulta gratuita',
+    'hero.eyebrow':'Despacho Jurídico Especializado — Nayarit, México',
+    'hero.headline':'Su patrimonio<br>merece una <em>defensa<br>extraordinaria.</em>',
+    'hero.sub':'Expertos en derecho agrario, inmobiliario y civil con más de 50 años de experiencia combinada. Protegemos su tierra, su herencia y su tranquilidad.',
+    'hero.cta1':'Consulta gratuita','hero.cta2':'Ver servicios',
+    'hero.stat1':'Años de experiencia','hero.stat2':'Socios fundadores','hero.stat3':'Especialización',
+    'trust.t1':'Cédula profesional','trust.s1':'Registrada ante SEP',
+    'trust.t2':'Respuesta en 24h','trust.s2':'Atención prioritaria',
+    'trust.t3':'Consulta gratuita','trust.s3':'Sin compromiso',
+    'trust.t4':'Personas y empresas','trust.s4':'Particulares y corporativo',
+    'prob.label':'El problema','prob.title':'Los conflictos<br>de tierra no<br>esperan.',
+    'prob.p1':'Un terreno sin regularizar, una herencia disputada o un documento con vicios puede costar años de litigios innecesarios — y perder lo que con tanto esfuerzo construyó.',
+    'prob.p2':'En Ecolaw entendemos que cada caso es único. Combinamos décadas de experiencia en derecho agrario e inmobiliario con una estrategia clara, honesta y orientada a resultados.',
+    'prob.cta':'Evalúe su caso hoy',
+    'prob.c1t':'Tierra sin papeles','prob.c1d':'Ejidos, predios y propiedades sin escritura en regla que no pueden venderse ni heredarse.',
+    'prob.c2t':'Herencias complicadas','prob.c2d':'Sucesiones agrarias con múltiples herederos, documentos incompletos o fallos previos.',
+    'prob.c3t':'Contratos nulos','prob.c3d':'Actos jurídicos con defectos de forma o fondo que ponen en riesgo su inversión.',
+    'prob.c4t':'Posesión disputada','prob.c4d':'Conflictos de posesión y usucapión donde el tiempo y la estrategia legal son decisivos.',
+    'srv.label':'Áreas de práctica','srv.title':'Servicios','srv.titleem':'especializados','srv.more':'Saber más →',
+    'srv.1t':'Regularización de Ejidos','srv.1d':'Asesoría y representación ante el Registro Agrario Nacional para la titulación y regularización de terrenos ejidales. Convertimos tierras en patrimonio seguro.',
+    'srv.2t':'Juicios Sucesorios Agrarios','srv.2d':'Tramitación completa de sucesiones ante el Tribunal Agrario. Garantizamos que su herencia quede en manos de quienes corresponde, con plena certeza jurídica.',
+    'srv.3t':'Juicios de Nulidad','srv.3d':'Impugnación de actos y contratos con vicios de nulidad absoluta o relativa. Protegemos su inversión cuando el documento no cumple los requisitos de ley.',
+    'srv.4t':'Usucapión / Prescripción','srv.4d':'Si usted lleva años poseyendo un bien de buena fe, la ley puede estar de su lado. Gestionamos el juicio de usucapión para obtener la propiedad legítima.',
+    'srv.5t':'Derecho Civil','srv.5d':'Contratos de compraventa, arrendamiento, donación y permuta. Revisión y redacción de documentos que resguardan su patrimonio ante cualquier contingencia.',
+    'srv.6t':'Asesoría Preventiva','srv.6d':'El mejor litigio es el que nunca ocurre. Le acompañamos en due diligence de propiedades, revisión de títulos y planeación patrimonial para evitar conflictos futuros.',
+    'prc.label':'Cómo trabajamos','prc.title':'Un proceso <em>transparente</em><br>desde el primer día',
+    'prc.1t':'Consulta gratuita','prc.1d':'Platíquenos su situación sin costo ni compromiso. Escuchamos cada detalle para entender el alcance real de su caso.',
+    'prc.2t':'Diagnóstico jurídico','prc.2d':'Analizamos documentos, antecedentes y viabilidad legal. Le entregamos un dictamen claro sobre sus opciones y probabilidades.',
+    'prc.3t':'Propuesta estratégica','prc.3d':'Diseñamos la ruta más eficiente: tiempos, costos y etapas. Usted decide con información completa, nunca a ciegas.',
+    'prc.4t':'Representación plena','prc.4d':'Nos hacemos cargo ante el tribunal, autoridad o notaría. Usted recibe reportes periódicos y acceso directo a su abogado.',
+    'prt.label':'Quiénes somos','prt.title':'Socios','prt.titleem':'fundadores',
+    'prt.intro':'Dos abogados con más de cinco décadas de experiencia combinada, formados en la Universidad Autónoma de Nayarit y forjados en la práctica real del derecho agrario e inmobiliario.',
+    'prt.y1':'20 años de experiencia','prt.d1':'Especialista en derecho agrario y sucesiones. Ha representado a centenares de familias en la regularización de su patrimonio y la defensa de sus derechos ante el Tribunal Agrario.',
+    'prt.y2':'30 años de experiencia','prt.d2':'Pionero en litigios de usucapión y juicios de nulidad en la región. Su trayectoria combina la defensa civil con la planeación patrimonial para personas físicas y morales.',
+    'tst.label':'Casos reales','tst.title':'Lo que dicen<br><em>nuestros clientes</em>',
+    'cta.label':'Dé el primer paso','cta.title':'Su caso tiene<br>solución jurídica.',
+    'cta.sub':'No espere más. Una consulta gratuita puede cambiar el rumbo de su patrimonio. Hable hoy con uno de nuestros socios.',
+    'cta.wa':'Agendar por WhatsApp','cta.call':'Llamar ahora',
+    'faq.label':'Preguntas frecuentes','faq.title':'Lo que más<br><em>nos preguntan</em>',
+    'faq.q1':'¿Cuánto cuesta la primera consulta?','faq.a1':'La consulta inicial es completamente gratuita y sin compromiso. En ella evaluamos su situación, le explicamos sus opciones legales y le damos un panorama claro de tiempos y costos antes de cualquier contratación.',
+    'faq.q2':'¿Cuánto tiempo tarda regularizar un ejido?','faq.a2':'Depende del tipo de trámite y la situación documental del predio. En general, los procesos ante el Registro Agrario Nacional pueden durar entre 4 y 18 meses. Le daremos un estimado específico una vez que revisemos su caso.',
+    'faq.q3':'¿Trabajan con clientes fuera de Nayarit?','faq.a3':'Sí. Si el bien o el conflicto está en Nayarit podemos representarle sin importar donde usted resida. Manejamos casos de mexicanos en el extranjero y clientes en distintos estados del país. Coordinamos todo vía digital.',
+    'faq.q4':'¿Pueden ayudarme si no tengo ningún documento?','faq.a4':'Es uno de los escenarios más comunes. A través de testigos, posesión continua, pago de impuestos prediales y otros elementos, muchas veces es posible construir un expediente legal sólido. Contáctenos y evaluamos su caso específico.',
+    'faq.q5':'¿Cómo se calculan sus honorarios?','faq.a5':'Los honorarios se determinan según la complejidad del caso, el tipo de trámite y los tiempos estimados. Le presentamos una propuesta transparente por escrito antes de comenzar. No hay costos ocultos ni sorpresas a mitad del proceso.',
+    'con.label':'Contacto','con.title':'Hablemos de<br>su <em>caso</em> hoy.',
+    'con.intro':'Rellene el formulario y le contactaremos directamente por WhatsApp en las próximas horas. También puede llamarnos o escribirnos directamente.',
+    'con.phone':'WhatsApp / Teléfono','con.email':'Correo electrónico','con.addr':'Oficinas',
+    'con.hours':'Horario de atención','con.hoursval':'Lun – Vie: 9:00 – 18:00',
+    'con.formtitle':'Cuéntenos su situación','con.formsub':'El formulario abrirá WhatsApp con su mensaje listo para enviar.',
+    'con.fname':'Nombre completo','con.fnameph':'Ej: Juan Pérez','con.fphone':'Teléfono','con.fphoneph':'Ej: 311 123 4567',
+    'con.fservice':'Tipo de asunto',
+    'con.fopt0':'Seleccione una opción','con.fopt1':'Regularización de Ejido','con.fopt2':'Juicio Sucesorio Agrario',
+    'con.fopt3':'Juicio de Nulidad','con.fopt4':'Usucapión / Prescripción','con.fopt5':'Derecho Civil / Contratos',
+    'con.fopt6':'Asesoría Preventiva','con.fopt7':'Otro',
+    'con.fmsg':'Describa brevemente su situación','con.fmsgph':'Cuéntenos qué está pasando con su propiedad o herencia…',
+    'con.fsend':'Enviar por WhatsApp',
+    'ft.about':'Despacho jurídico especializado en derecho agrario, inmobiliario y civil. Protegemos su patrimonio con experiencia, ética y resultados.',
+    'ft.srv':'Servicios','ft.firm':'Despacho','ft.ourprocess':'Nuestro proceso',
+    'ft.copy':'© 2025 Ecolaw Real Estate & Law. Todos los derechos reservados.',
+    'ft.disc':'La información contenida en este sitio web es de carácter informativo y no constituye asesoría jurídica formal. Para obtener orientación legal específica consulte directamente con nuestros abogados.',
+    'wa.tip':'¿Dudas? Escríbanos ahora →'
+  },
+  en: {
+    'nav.services':'Services','nav.process':'Process','nav.firm':'The Firm',
+    'nav.contact':'Contact','nav.cta':'Free Consultation',
+    'hero.eyebrow':'Specialized Law Firm — Nayarit, Mexico',
+    'hero.headline':'Your assets deserve an <em>extraordinary<br>legal defense.</em>',
+    'hero.sub':'Experts in agrarian, real estate and civil law with over 50 years of combined experience. We protect your land, your inheritance and your peace of mind.',
+    'hero.cta1':'Free Consultation','hero.cta2':'Our Services',
+    'hero.stat1':'Years of experience','hero.stat2':'Founding partners','hero.stat3':'Specialization',
+    'trust.t1':'Professional License','trust.s1':'Registered with SEP',
+    'trust.t2':'24h Response','trust.s2':'Priority attention',
+    'trust.t3':'Free Consultation','trust.s3':'No commitment',
+    'trust.t4':'Individuals & Businesses','trust.s4':'Personal & Corporate',
+    'prob.label':'The Challenge','prob.title':'Land disputes<br>cannot<br>wait.',
+    'prob.p1':'An unregistered property, a disputed inheritance or a flawed contract can cost years of unnecessary litigation — and losing what you worked so hard to build.',
+    'prob.p2':'At Ecolaw we understand that every case is unique. We combine decades of expertise in agrarian and real estate law with a clear, honest strategy focused on results.',
+    'prob.cta':'Evaluate Your Case Today',
+    'prob.c1t':'Land Without Title','prob.c1d':'Ejido lands and properties without proper deeds that cannot be sold or inherited.',
+    'prob.c2t':'Complex Inheritances','prob.c2d':'Agrarian successions with multiple heirs, incomplete documents or prior rulings.',
+    'prob.c3t':'Void Contracts','prob.c3d':'Legal acts with formal or substantive defects that put your investment at risk.',
+    'prob.c4t':'Disputed Possession','prob.c4d':'Possession and adverse possession conflicts where timing and legal strategy are decisive.',
+    'srv.label':'Practice Areas','srv.title':'Specialized','srv.titleem':'Services','srv.more':'Learn more →',
+    'srv.1t':'Ejido Regularization','srv.1d':'Legal advice and representation before the National Agrarian Registry for the titling and regularization of ejido lands. We turn land into secure assets.',
+    'srv.2t':'Agrarian Succession Trials','srv.2d':'Complete succession proceedings before the Agrarian Tribunal. We ensure your inheritance reaches the rightful heirs with full legal certainty.',
+    'srv.3t':'Nullity Trials','srv.3d':'Challenging acts and contracts with absolute or relative nullity defects. We protect your investment when the document fails to meet legal requirements.',
+    'srv.4t':'Adverse Possession','srv.4d':'If you have possessed a property in good faith for years, the law may be on your side. We manage the adverse possession trial to obtain legitimate ownership.',
+    'srv.5t':'Civil Law','srv.5d':'Purchase, lease, donation and barter contracts. Review and drafting of documents that protect your assets against any contingency.',
+    'srv.6t':'Preventive Counsel','srv.6d':'The best litigation is the one that never happens. We assist with property due diligence, title review and estate planning to prevent future conflicts.',
+    'prc.label':'How We Work','prc.title':'A <em>transparent</em> process<br>from day one',
+    'prc.1t':'Free Consultation','prc.1d':'Tell us your situation at no cost or commitment. We listen to every detail to understand the full scope of your case.',
+    'prc.2t':'Legal Diagnosis','prc.2d':'We analyze documents, background and legal viability. We deliver a clear assessment of your options and probabilities.',
+    'prc.3t':'Strategic Proposal','prc.3d':'We design the most efficient route: timelines, costs and stages. You decide with complete information, never in the dark.',
+    'prc.4t':'Full Representation','prc.4d':'We handle everything before the tribunal, authority or notary. You receive periodic reports and direct access to your attorney.',
+    'prt.label':'About Us','prt.title':'Founding','prt.titleem':'Partners',
+    'prt.intro':'Two attorneys with over five decades of combined experience, trained at the Universidad Autónoma de Nayarit and forged in the real practice of agrarian and real estate law.',
+    'prt.y1':'20 years of experience','prt.d1':'Specialist in agrarian law and successions. She has represented hundreds of families in the regularization of their assets and the defense of their rights before the Agrarian Tribunal.',
+    'prt.y2':'30 years of experience','prt.d2':'Pioneer in adverse possession and nullity litigation in the region. His career combines civil defense with estate planning for individuals and corporations.',
+    'tst.label':'Real Cases','tst.title':'What our<br><em>clients say</em>',
+    'cta.label':'Take the First Step','cta.title':'Your case has<br>a legal solution.',
+    'cta.sub':'Don\'t wait any longer. A free consultation can change the course of your assets. Speak today with one of our partners.',
+    'cta.wa':'Schedule via WhatsApp','cta.call':'Call Now',
+    'faq.label':'Frequently Asked Questions','faq.title':'What you<br><em>ask us most</em>',
+    'faq.q1':'How much does the first consultation cost?','faq.a1':'The initial consultation is completely free and without commitment. We evaluate your situation, explain your legal options and give you a clear overview of timelines and costs before any engagement.',
+    'faq.q2':'How long does ejido regularization take?','faq.a2':'It depends on the type of procedure and the documentary status of the property. Generally, National Agrarian Registry processes can take between 4 and 18 months. We will give you a specific estimate once we review your case.',
+    'faq.q3':'Do you work with clients outside Nayarit?','faq.a3':'Yes. If the property or conflict is in Nayarit we can represent you regardless of where you live. We handle cases for Mexicans abroad and clients in different states. We coordinate everything digitally.',
+    'faq.q4':'Can you help me if I have no documents?','faq.a4':'This is one of the most common scenarios. Through witnesses, continuous possession, property tax payments and other elements, it is often possible to build a solid legal file. Contact us and we will evaluate your specific case.',
+    'faq.q5':'How are your fees calculated?','faq.a5':'Fees are determined based on the complexity of the case, the type of procedure and estimated timelines. We present a transparent written proposal before starting. There are no hidden costs or mid-process surprises.',
+    'con.label':'Contact','con.title':'Let\'s talk about<br>your <em>case</em> today.',
+    'con.intro':'Fill out the form and we will contact you directly via WhatsApp within the next few hours. You can also call or write to us directly.',
+    'con.phone':'WhatsApp / Phone','con.email':'Email','con.addr':'Offices',
+    'con.hours':'Office Hours','con.hoursval':'Mon – Fri: 9:00 AM – 6:00 PM',
+    'con.formtitle':'Tell Us Your Situation','con.formsub':'The form will open WhatsApp with your message ready to send.',
+    'con.fname':'Full name','con.fnameph':'E.g.: John Smith','con.fphone':'Phone','con.fphoneph':'E.g.: 311 123 4567',
+    'con.fservice':'Type of matter',
+    'con.fopt0':'Select an option','con.fopt1':'Ejido Regularization','con.fopt2':'Agrarian Succession Trial',
+    'con.fopt3':'Nullity Trial','con.fopt4':'Adverse Possession','con.fopt5':'Civil Law / Contracts',
+    'con.fopt6':'Preventive Counsel','con.fopt7':'Other',
+    'con.fmsg':'Briefly describe your situation','con.fmsgph':'Tell us what is happening with your property or inheritance…',
+    'con.fsend':'Send via WhatsApp',
+    'ft.about':'Law firm specialized in agrarian, real estate and civil law. We protect your assets with experience, ethics and results.',
+    'ft.srv':'Services','ft.firm':'Law Firm','ft.ourprocess':'Our Process',
+    'ft.copy':'© 2025 Ecolaw Real Estate & Law. All rights reserved.',
+    'ft.disc':'The information on this website is for informational purposes only and does not constitute formal legal advice. For specific legal guidance please consult directly with our attorneys.',
+    'wa.tip':'Questions? Write to us →'
+  }
+};
 
-// ── Hamburger menu
+let currentLang = localStorage.getItem('ecolaw_lang') || 'es';
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('ecolaw_lang', lang);
+  document.documentElement.lang = lang;
+
+  // Text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+  });
+  // HTML content (elements with br, em)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18nHtml;
+    if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+  });
+  // Placeholders
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.dataset.i18nPh;
+    if (T[lang][key] !== undefined) el.placeholder = T[lang][key];
+  });
+
+  // Toggle button states
+  ['btnEs','btnEn','mBtnEs','mBtnEn'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.classList.remove('active');
+  });
+  const activeId = lang === 'es' ? ['btnEs','mBtnEs'] : ['btnEn','mBtnEn'];
+  activeId.forEach(id => { const b = document.getElementById(id); if(b) b.classList.add('active'); });
+
+  // WhatsApp form message language
+  window._msgLang = lang;
+}
+
+// Init
+setLang(currentLang);
+
+// ── Nav scroll
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); }, { passive: true });
+
+// ── Hamburger
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 const mobileClose = document.getElementById('mobileClose');
-
-function openMenu() {
-  hamburger.classList.add('open');
-  mobileMenu.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeMenu() {
-  hamburger.classList.remove('open');
-  mobileMenu.classList.remove('open');
-  document.body.style.overflow = '';
-}
-hamburger.addEventListener('click', () => {
-  hamburger.classList.contains('open') ? closeMenu() : openMenu();
-});
+function openMenu() { hamburger.classList.add('open'); mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeMenu() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); document.body.style.overflow = ''; }
+hamburger.addEventListener('click', () => { hamburger.classList.contains('open') ? closeMenu() : openMenu(); });
 mobileClose.addEventListener('click', closeMenu);
-document.querySelectorAll('.mobile-link').forEach(link => {
-  link.addEventListener('click', closeMenu);
-});
+document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMenu));
 
-// ── IntersectionObserver for reveal animations
-const revealEls = document.querySelectorAll('.reveal');
+// ── Reveal
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-revealEls.forEach(el => observer.observe(el));
-
-// ── FAQ accordion
+// ── FAQ
 document.querySelectorAll('.faq-q').forEach(btn => {
   btn.addEventListener('click', () => {
     const item = btn.closest('.faq-item');
     const answer = item.querySelector('.faq-a');
     const isOpen = item.classList.contains('open');
-
-    // Close all
-    document.querySelectorAll('.faq-item.open').forEach(openItem => {
-      openItem.classList.remove('open');
-      openItem.querySelector('.faq-a').style.maxHeight = null;
-    });
-
-    // Open clicked if it was closed
-    if (!isOpen) {
-      item.classList.add('open');
-      answer.style.maxHeight = answer.scrollHeight + 'px';
-    }
+    document.querySelectorAll('.faq-item.open').forEach(o => { o.classList.remove('open'); o.querySelector('.faq-a').style.maxHeight = null; });
+    if (!isOpen) { item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px'; }
   });
 });
 
 // ── WhatsApp form
+window._msgLang = currentLang;
 function sendToWhatsApp(e) {
   e.preventDefault();
   const nombre   = document.getElementById('nombre').value.trim();
   const telefono = document.getElementById('telefono').value.trim();
   const servicio = document.getElementById('servicio').value;
   const mensaje  = document.getElementById('mensaje').value.trim();
-
-  const wa = '+523312345678';
-  let text = `Hola, mi nombre es *${nombre}*.`;
-  if (telefono) text += ` Mi número de contacto es: ${telefono}.`;
-  if (servicio) text += `\n\n*Asunto:* ${servicio}`;
-  text += `\n\n*Situación:*\n${mensaje}`;
-  text += `\n\n_(Mensaje enviado desde ecolaw.mx)_`;
-
-  const url = `https://wa.me/${wa.replace(/\D/g,'')}?text=${encodeURIComponent(text)}`;
-  window.open(url, '_blank', 'noopener,noreferrer');
+  const wa = '523111030697';
+  let text;
+  if (window._msgLang === 'en') {
+    text = `Hello, my name is *${nombre}*.`;
+    if (telefono) text += ` My contact number is: ${telefono}.`;
+    if (servicio) text += `\n\n*Matter:* ${servicio}`;
+    text += `\n\n*Situation:*\n${mensaje}`;
+    text += `\n\n_(Message sent from ecolaw.mx)_`;
+  } else {
+    text = `Hola, mi nombre es *${nombre}*.`;
+    if (telefono) text += ` Mi número de contacto es: ${telefono}.`;
+    if (servicio) text += `\n\n*Asunto:* ${servicio}`;
+    text += `\n\n*Situación:*\n${mensaje}`;
+    text += `\n\n_(Mensaje enviado desde ecolaw.mx)_`;
+  }
+  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
   return false;
 }
 
-// ── WhatsApp tooltip auto-hide
-setTimeout(() => {
-  const tooltip = document.getElementById('waTooltip');
-  if (tooltip) tooltip.style.display = 'none';
-}, 4500);
+// ── WA tooltip
+setTimeout(() => { const t = document.getElementById('waTooltip'); if(t) t.style.display = 'none'; }, 4500);
 
-// ── Smooth anchor scroll (handles nav height offset)
+// ── Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      const navH = nav.offsetHeight + 16;
-      window.scrollTo({
-        top: target.getBoundingClientRect().top + window.scrollY - navH,
-        behavior: 'smooth'
-      });
-    }
+    if (target) { e.preventDefault(); window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight - 16, behavior: 'smooth' }); }
   });
 });
 
-// ── Hero stats count-up
+// ── Count-up
 function animateCount(el, end, suffix = '') {
-  const duration = 1800;
-  const start = 0;
-  const startTime = performance.now();
+  const dur = 1800, t0 = performance.now();
   function step(now) {
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const val = Math.floor(progress * end);
-    el.textContent = val + suffix;
-    if (progress < 1) requestAnimationFrame(step);
-    else el.textContent = end + suffix;
+    const p = Math.min((now - t0) / dur, 1);
+    el.textContent = Math.floor(p * end) + suffix;
+    if (p < 1) requestAnimationFrame(step); else el.textContent = end + suffix;
   }
   requestAnimationFrame(step);
 }
-
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const nums = entry.target.querySelectorAll('.hero-stat-num');
-      nums.forEach(num => {
-        const text = num.textContent;
-        const match = text.match(/^(\d+)(.*)$/);
-        if (match) animateCount(num, parseInt(match[1]), match[2]);
+const statsObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.hero-stat-num').forEach(num => {
+        const m = num.textContent.match(/^(\d+)(.*)$/);
+        if (m) animateCount(num, parseInt(m[1]), m[2]);
       });
-      statsObserver.unobserve(entry.target);
+      statsObs.unobserve(e.target);
     }
   });
 }, { threshold: 0.5 });
-
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) statsObserver.observe(heroStats);
+const hs = document.querySelector('.hero-stats');
+if (hs) statsObs.observe(hs);
 </script>
 </body>
 </html>
