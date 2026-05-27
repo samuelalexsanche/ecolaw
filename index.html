@@ -59,7 +59,7 @@ ul{list-style:none}
 .nav-right{display:flex;align-items:center;gap:1rem;flex-shrink:0}
 .nav-cta{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;padding:.6rem 1.4rem;border:1px solid var(--gold);color:var(--gold);transition:var(--trans);white-space:nowrap}
 .nav-cta:hover{background:var(--gold);color:var(--bg-deep)}
-.lang-toggle{display:flex;align-items:center;border:1px solid var(--border-md);overflow:hidden;flex-shrink:0}
+.lang-toggle{display:flex;align-items:center;border:1px solid var(--border-md);overflow:hidden;flex-shrink:0;order:1}
 .lang-btn{padding:.35rem .65rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--muted);transition:var(--trans);cursor:pointer;font-family:var(--ff-body)}
 .lang-btn.active{background:var(--gold);color:var(--bg-deep)}
 .lang-btn:hover:not(.active){color:var(--cream)}
@@ -275,7 +275,6 @@ ul{list-style:none}
   .footer-bottom{flex-direction:column}
   .footer-disclaimer{text-align:left}
   .form-row{grid-template-columns:1fr}
-  .lang-toggle{display:none}
 }
 @media(max-width:480px){
   .services-grid{grid-template-columns:1fr}
@@ -305,11 +304,11 @@ ul{list-style:none}
       <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
     </ul>
     <div class="nav-right">
-      <div class="lang-toggle">
-        <button class="lang-btn active" id="btnEs" onclick="setLang('es')">ES</button>
-        <button class="lang-btn" id="btnEn" onclick="setLang('en')">EN</button>
-      </div>
       <a href="#contacto" class="nav-cta" data-i18n="nav.cta">Consulta gratuita</a>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnEs" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" id="btnEn" onclick="setLang('en')">EN</button>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menú">
       <span></span><span></span><span></span>
